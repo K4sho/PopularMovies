@@ -1,9 +1,7 @@
 *.iml
 /.gradle
-/.idea
 /.DS_Store
 /build
-/gradle
 /captures
 /projectFilesBackup
 /local.properties
@@ -12,7 +10,5 @@
 /gradlew.bat
 /app/build
 /app/libs
-/app/src/test/
-/app/src/androidTest/
 .externalNativeBuild
 .cxx
