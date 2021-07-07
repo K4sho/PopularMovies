@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SearchMovie</string>
+    <string name="age_limit">18+</string>
+    <string name="date_movie">22.04.2021</string>
+    <string name="genre">боевики</string>
+    <string name="movie_name">Гнев человеческий</string>
 </resources>
