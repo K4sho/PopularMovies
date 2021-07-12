@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="actors_name_start_offset">11dp</dimen>
+    <dimen name="actors_name_top_offset">12dp</dimen>
+    <dimen name="main_left_margin">20dp</dimen>
+    <dimen name="margin_btw_actors">10dp</dimen>
+    <dimen name="margin_top_actors">160dp</dimen>
+    <dimen name="actors_image_width">150dp</dimen>
+    <dimen name="actors_image_height">196dp</dimen>
+    <dimen name="bottom_margin_actors_card">46dp</dimen>
+    <dimen name="movie_card_info_top_margin">224dp</dimen>
+    <dimen name="age_limit_top_margin">32dp</dimen>
+    <dimen name="genre_margin_start_in_rect">10dp</dimen>
+    <dimen name="genre_margin_top_in_rect">2dp</dimen>
+    <dimen name="date_movie_margin_start">14dp</dimen>
+    <dimen name="date_movie_margin_top">32dp</dimen>
+    <dimen name="date_movie_margin_end">208dp</dimen>
+    <dimen name="age_limit_image_margin_start">298dp</dimen>
+    <dimen name="age_limit_image_margin_top">42dp</dimen>
+    <dimen name="age_limit_margin_start">308dp</dimen>
+    <dimen name="age_limit_margin_top">54dp</dimen>
+    <dimen name="age_limit_margin_end">28dp</dimen>
+    <dimen name="movie_desc_margin_top">128dp</dimen>
+    <dimen name="movie_desc_margin_end">8dp</dimen>
+    <dimen name="movie_actors_margin_top">35dp</dimen>
+</resources>
