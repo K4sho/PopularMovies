@@ -211,7 +211,7 @@
 
             <HorizontalScrollView
                 android:id="@+id/scroll_view_actors"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_movie_actors"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -220,44 +220,29 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraint_horizontal_scroll_view"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/bottom_margin_actors_card">
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_actor_1"
-                        android:layout_width="@dimen/actors_image_width"
-                        android:layout_height="@dimen/actors_image_height"
-                        app:srcCompat="@drawable/artist_image_1"
-                        android:layout_marginStart="@dimen/main_left_margin"
-                        android:layout_marginTop="@dimen/margin_top_actors"
-                        app:shapeAppearanceOverlay="@style/artist_rounded_iv"
-                        android:scaleType="centerCrop"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:srcCompat="@drawable/image_artist_1"
+                        style="@style/first_artist_image"
+                        />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_actor_2"
-                        android:layout_width="@dimen/actors_image_width"
-                        android:layout_height="@dimen/actors_image_height"
-                        app:srcCompat="@drawable/artist_image_2"
-                        android:layout_marginStart="@dimen/margin_btw_actors"
-                        android:layout_marginTop="@dimen/margin_top_actors"
-                        app:shapeAppearanceOverlay="@style/artist_rounded_iv"
-                        android:scaleType="centerCrop"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/iv_actor_1"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:srcCompat="@drawable/image_artist_2"
+                        style="@style/artist_image"/>
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_actor_3"
-                        android:layout_width="@dimen/actors_image_width"
-                        android:layout_height="@dimen/actors_image_height"
-                        app:srcCompat="@drawable/artist_image_3"
-                        android:layout_marginStart="@dimen/margin_btw_actors"
-                        android:layout_marginTop="@dimen/margin_top_actors"
-                        app:shapeAppearanceOverlay="@style/artist_rounded_iv"
-                        android:scaleType="centerCrop"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/iv_actor_2"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:srcCompat="@drawable/image_artist_3"
+                        style="@style/artist_image"/>
 
                     <TextView
                         android:id="@+id/tv_actor_1"

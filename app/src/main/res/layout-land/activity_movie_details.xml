@@ -8,37 +8,37 @@
     >
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/image_banner_jason"
+        android:id="@+id/iv_banner"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".4"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:contentDescription="@string/movie_description"
-        android:scaleType="centerCrop"
-        app:shapeAppearanceOverlay="@style/artist_rounded_iv"/>
+        app:srcCompat="@drawable/image_movie_cover"
+        style="@style/horizontal_movie_banner"/>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/iv_banner"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".6"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_info_about_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/info_background"
+            android:paddingBottom="@dimen/movie_info_card_padding_bottom"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/movie_card_info_top_margin"
-            android:background="@drawable/info_background">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
                 android:id="@+id/iv_rectangle_1"
@@ -211,7 +211,7 @@
 
             <HorizontalScrollView
                 android:id="@+id/scroll_view_actors"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_movie_actors"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -220,44 +220,29 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraint_horizontal_scroll_view"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/bottom_margin_actors_card">
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_actor_1"
-                        android:layout_width="@dimen/actors_image_width"
-                        android:layout_height="@dimen/actors_image_height"
-                        app:srcCompat="@drawable/artist_image_1"
-                        android:layout_marginStart="@dimen/main_left_margin"
-                        android:layout_marginTop="@dimen/margin_top_actors"
-                        app:shapeAppearanceOverlay="@style/artist_rounded_iv"
-                        android:scaleType="centerCrop"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:srcCompat="@drawable/image_artist_1"
+                        style="@style/first_artist_image"
+                        />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_actor_2"
-                        android:layout_width="@dimen/actors_image_width"
-                        android:layout_height="@dimen/actors_image_height"
-                        app:srcCompat="@drawable/artist_image_2"
-                        android:layout_marginStart="@dimen/margin_btw_actors"
-                        android:layout_marginTop="@dimen/margin_top_actors"
-                        app:shapeAppearanceOverlay="@style/artist_rounded_iv"
-                        android:scaleType="centerCrop"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/iv_actor_1"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:srcCompat="@drawable/image_artist_2"
+                        style="@style/artist_image"/>
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_actor_3"
-                        android:layout_width="@dimen/actors_image_width"
-                        android:layout_height="@dimen/actors_image_height"
-                        app:srcCompat="@drawable/artist_image_3"
-                        android:layout_marginStart="@dimen/margin_btw_actors"
-                        android:layout_marginTop="@dimen/margin_top_actors"
-                        app:shapeAppearanceOverlay="@style/artist_rounded_iv"
-                        android:scaleType="centerCrop"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/iv_actor_2"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:srcCompat="@drawable/image_artist_3"
+                        style="@style/artist_image"/>
 
                     <TextView
                         android:id="@+id/tv_actor_1"

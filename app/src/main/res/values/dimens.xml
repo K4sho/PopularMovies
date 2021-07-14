@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="actors_name_start_offset">11dp</dimen>
+    <dimen name="actors_name_start_offset">12dp</dimen>
     <dimen name="actors_name_top_offset">12dp</dimen>
     <dimen name="main_left_margin">20dp</dimen>
     <dimen name="margin_btw_actors">10dp</dimen>
@@ -23,4 +23,11 @@
     <dimen name="movie_desc_margin_top">128dp</dimen>
     <dimen name="movie_desc_margin_end">8dp</dimen>
     <dimen name="movie_actors_margin_top">35dp</dimen>
+    <dimen name="movie_info_card_padding_bottom">46dp</dimen>
+    <dimen name="artist_image_width">150dp</dimen>
+    <dimen name="artist_image_height">196dp</dimen>
+    <dimen name="artist_image_corner">10dp</dimen>
+    <dimen name="artist_image_margin_top">16dp</dimen>
+    <dimen name="artist_image_margin_start">10dp</dimen>
+    <dimen name="first_artist_image_margin_start">@dimen/main_left_margin</dimen>
 </resources>
