@@ -70,7 +70,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/date_movie_margin_start"
                 android:layout_marginTop="@dimen/date_movie_margin_top"
-                android:layout_marginEnd="@dimen/date_movie_margin_end"
                 android:gravity="center"
                 android:lineSpacingExtra="0sp"
                 android:text="@string/date_movie"
@@ -84,12 +83,10 @@
                 android:id="@+id/iv_age_limit_ellipse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/age_limit_image_margin_start"
                 android:layout_marginTop="@dimen/age_limit_image_margin_top"
                 android:layout_marginEnd="@dimen/main_left_margin"
                 android:background="@drawable/ic_ellipse"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
             </ImageView>
@@ -98,7 +95,6 @@
                 android:id="@+id/tv_age_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/age_limit_margin_start"
                 android:layout_marginTop="@dimen/age_limit_margin_top"
                 android:layout_marginEnd="@dimen/age_limit_margin_end"
                 android:gravity="center"
@@ -106,9 +102,7 @@
                 android:text="@string/age_limit"
                 android:textAlignment="center"
                 android:textAppearance="@style/age_limit"
-                android:translationY="-0.15sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -116,20 +110,20 @@
                 android:layout_width="182dp"
                 android:layout_height="22dp"
                 android:layout_marginStart="@dimen/main_left_margin"
-                android:layout_marginTop="63dp"
+                android:layout_marginTop="@dimen/movie_tittle_margin_top"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="0sp"
                 android:text="@string/movie_name"
                 android:textAppearance="@style/movie_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/tv_date_movie" />
 
             <androidx.constraintlayout.helper.widget.Flow
                 android:id="@+id/flow_rating"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/main_left_margin"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/rating_start_margin_top"
                 app:constraint_referenced_ids="rating_star_1, rating_star_2, rating_star_3, rating_star_4, rating_star_5"
                 app:flow_horizontalGap="2dp"
                 app:flow_horizontalStyle="spread_inside"
@@ -186,7 +180,7 @@
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/flow_rating" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrierDescriptionline"
