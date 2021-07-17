@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SearchMovie</string>
     <string name="age_limit">18+</string>
+    <string name="age_restriction">%1$s+</string>
     <string name="date_movie">22.04.2021</string>
     <string name="genre">боевики</string>
     <string name="movie_name">Гнев человеческий</string>
@@ -9,4 +10,10 @@
     <string name="actor_1">Джейсон Стэйтем</string>
     <string name="actor_2">Холт Маккэллани</string>
     <string name="actor_3">Джош Харнетт</string>
+    <string name="search_button">search button</string>
+    <string name="popular_now">Популярное сейчас</string>
+    <string name="main_empty_message">empty</string>
+    <string name="item_movie_description">Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя…</string>
+    <string name="empty_movies_list">Сейчас здесь нет
+фильмов, но мы уже отправили режиссёра снимать фильм для вас</string>
 </resources>
