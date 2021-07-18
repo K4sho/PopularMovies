@@ -18,12 +18,12 @@ import ru.skillbranch.searchmovie.presentation.recycler_views.adapters.Categorie
 import ru.skillbranch.searchmovie.presentation.recycler_views.adapters.MoviesRecyclerAdapter
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.BottomSpaceItemDecoration
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.RightSpaceItemDecoration
-import ru.skillbranch.searchmovie.presentation.view_models.CategoriesViewModel
-import ru.skillbranch.searchmovie.presentation.view_models.MoviesViewModel
+import ru.skillbranch.searchmovie.data.repository.CategoriesModel
+import ru.skillbranch.searchmovie.data.repository.MoviesModel
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var moviesModel: MoviesViewModel
-    private lateinit var categoriesModel: CategoriesViewModel
+    private lateinit var moviesModel: MoviesModel
+    private lateinit var categoriesModel: CategoriesModel
     private lateinit var categoriesRecyclerView: RecyclerView
     private lateinit var moviesRecyclerView: RecyclerView
     private var categories = listOf<CategoryDto>()
@@ -95,8 +95,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initDataSource() {
-        moviesModel = MoviesViewModel(MoviesDataSourceImpl())
-        categoriesModel = CategoriesViewModel(CategoriesDataSourceImpl())
+        moviesModel = MoviesModel(MoviesDataSourceImpl())
+        categoriesModel = CategoriesModel(CategoriesDataSourceImpl())
     }
 
     private fun updateData() {

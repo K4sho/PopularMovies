@@ -1,8 +1,8 @@
-package ru.skillbranch.searchmovie.presentation.view_models
+package ru.skillbranch.searchmovie.data.repository
 
 import ru.skillbranch.searchmovie.data.sources.categories.ICategoriesDataSource
 
-class CategoriesViewModel(
+class CategoriesModel(
     private val categoriesDataSource: ICategoriesDataSource
 ) {
     fun getCategories() = categoriesDataSource.getCategories()
