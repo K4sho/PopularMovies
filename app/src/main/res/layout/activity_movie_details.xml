@@ -7,7 +7,7 @@
     android:background="@color/movie_card_background">
 
     <ImageButton
-        android:id="@+id/searchButton"
+        android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/search_button_top_margin"
@@ -20,14 +20,14 @@
 
     <TextView
         android:id="@+id/tv_popular_now_title"
-        style="@style/BaseText.PopularNow"
+        style="@style/BaseText.popular_now"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/popular_now_start_margin"
         android:layout_marginTop="@dimen/popular_now_top_margin"
         android:text="@string/popular_now"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchButton" />
+        app:layout_constraintTop_toBottomOf="@id/search_button" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_categories"

@@ -8,7 +8,7 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_item_movie_cover"
-        style="@style/BaseRoundedImage.ItemMovieCover"
+        style="@style/cover_rounded_iv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_movie_cover_height"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/tv_item_movie_title"
-        android:textAppearance="@style/movie_name"
+        android:textAppearance="@style/BaseText.item_movie_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/item_movie_title_start_margin"
