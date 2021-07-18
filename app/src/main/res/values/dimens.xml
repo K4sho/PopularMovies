@@ -29,32 +29,30 @@
     <dimen name="first_artist_image_margin_start">@dimen/main_left_margin</dimen>
     <dimen name="rating_start_margin_top">8dp</dimen>
 
-    <dimen name="activity_movie_details_start_margin">16dp</dimen>
-
     <dimen name="movie_title_text_size">20sp</dimen>
     <dimen name="movie_title_top_margin">16dp</dimen>
     <dimen name="movie_title_start_margin">16dp</dimen>
 
     <dimen name="age_rating_text_size">14sp</dimen>
     <dimen name="age_rating_top_margin">42dp</dimen>
-    <dimen name="age_rating_end_margin">@dimen/activity_movie_details_start_margin</dimen>
+    <dimen name="age_rating_end_margin">@dimen/main_left_margin</dimen>
 
     <dimen name="movie_category_text_size">10sp</dimen>
     <dimen name="movie_category_top_margin">32dp</dimen>
-    <dimen name="movie_category_start_margin">@dimen/activity_movie_details_start_margin</dimen>
+    <dimen name="movie_category_start_margin">@dimen/main_left_margin</dimen>
 
     <dimen name="movie_date_text_size">12sp</dimen>
     <dimen name="movie_date_top_margin">32dp</dimen>
-    <dimen name="movie_date_start_margin">@dimen/activity_movie_details_start_margin</dimen>
+    <dimen name="movie_date_start_margin">@dimen/main_left_margin</dimen>
 
     <dimen name="movie_description_text_size">14sp</dimen>
     <dimen name="movie_description_top_margin">16dp</dimen>
-    <dimen name="movie_description_start_margin">@dimen/activity_movie_details_start_margin</dimen>
+    <dimen name="movie_description_start_margin">@dimen/main_left_margin</dimen>
     <dimen name="movie_description_end_margin">16dp</dimen>
 
     <dimen name="artist_title_text_size">16sp</dimen>
     <dimen name="artist_title_top_margin">35sp</dimen>
-    <dimen name="artist_title_start_margin">@dimen/activity_movie_details_start_margin</dimen>
+    <dimen name="artist_title_start_margin">@dimen/main_left_margin</dimen>
 
     <dimen name="artist_name_text_size">12sp</dimen>
     <dimen name="artist_name_top_margin">12sp</dimen>
@@ -71,13 +69,11 @@
     <dimen name="artist_image_corner_radius">10dp</dimen>
     <dimen name="artist_image_top_margin">16dp</dimen>
     <dimen name="artist_image_start_margin">10dp</dimen>
-    <dimen name="first_artist_image_start_margin">@dimen/activity_movie_details_start_margin</dimen>
+    <dimen name="first_artist_image_start_margin">@dimen/main_left_margin</dimen>
 
     <dimen name="rating_star_top_margin">8dp</dimen>
     <dimen name="rating_star_start_margin">2dp</dimen>
-    <dimen name="first_rating_star_start_margin">@dimen/activity_movie_details_start_margin</dimen>
-
-    <dimen name="bottom_navigation_view_height">48dp</dimen>
+    <dimen name="first_rating_star_start_margin">@dimen/main_left_margin</dimen>
 
     <dimen name="search_button_top_margin">30dp</dimen>
     <dimen name="search_button_end_margin">20dp</dimen>
@@ -125,4 +121,6 @@
     <dimen name="item_movie_category_end_padding">9dp</dimen>
     <dimen name="item_movie_category_top_padding">4dp</dimen>
     <dimen name="item_movie_category_bottom_padding">3dp</dimen>
+
+    <dimen name="item_rating_and_limit_top_margin">5dp</dimen>
 </resources>
