@@ -77,7 +77,7 @@
 
     <dimen name="search_button_top_margin">30dp</dimen>
     <dimen name="search_button_end_margin">20dp</dimen>
-    <dimen name="age_limit_bottom_margin">3dp</dimen>
+    <dimen name="age_limit_bottom_margin">4dp</dimen>
 
     <dimen name="popular_now_text_size">16sp</dimen>
     <dimen name="popular_now_top_margin">22dp</dimen>
@@ -86,7 +86,7 @@
     <dimen name="categories_recycler_view_top_margin">12dp</dimen>
     <dimen name="categories_recycler_view_start_margin">20dp</dimen>
 
-    <dimen name="movies_recycler_view_top_margin">15dp</dimen>
+    <dimen name="movies_recycler_view_top_margin">16dp</dimen>
     <dimen name="movies_recycler_view_start_margin">20dp</dimen>
 
     <dimen name="item_movie_width">150dp</dimen>
@@ -98,17 +98,17 @@
 
     <dimen name="item_movie_title_text_size">14sp</dimen>
     <dimen name="item_movie_title_top_margin">8dp</dimen>
-    <dimen name="item_movie_title_start_margin">3dp</dimen>
+    <dimen name="item_movie_title_start_margin">4dp</dimen>
 
     <dimen name="item_movie_description_text_size">12sp</dimen>
     <dimen name="item_movie_description_top_margin">10dp</dimen>
-    <dimen name="item_movie_description_start_margin">3dp</dimen>
+    <dimen name="item_movie_description_start_margin">4dp</dimen>
 
     <dimen name="item_movie_star_width">14dp</dimen>
     <dimen name="item_movie_star_height">14dp</dimen>
-    <dimen name="item_movie_first_star_start_margin">3dp</dimen>
+    <dimen name="item_movie_first_star_start_margin">5dp</dimen>
     <dimen name="item_movie_star_start_margin">2dp</dimen>
-    <dimen name="item_movie_star_bottom_margin">5dp</dimen>
+    <dimen name="item_movie_star_bottom_margin">6dp</dimen>
 
     <dimen name="item_movie_age_restriction_width">20dp</dimen>
     <dimen name="item_movie_age_restriction_height">20dp</dimen>
@@ -117,10 +117,10 @@
     <dimen name="item_movie_age_restriction_bottom_margin">2dp</dimen>
 
     <dimen name="item_movie_category_end_margin">6dp</dimen>
-    <dimen name="item_movie_category_start_padding">9dp</dimen>
-    <dimen name="item_movie_category_end_padding">9dp</dimen>
+    <dimen name="item_movie_category_start_padding">10dp</dimen>
+    <dimen name="item_movie_category_end_padding">10dp</dimen>
     <dimen name="item_movie_category_top_padding">4dp</dimen>
-    <dimen name="item_movie_category_bottom_padding">3dp</dimen>
+    <dimen name="item_movie_category_bottom_padding">4dp</dimen>
 
-    <dimen name="item_rating_and_limit_top_margin">5dp</dimen>
+    <dimen name="item_rating_and_limit_top_margin">6dp</dimen>
 </resources>
