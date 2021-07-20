@@ -10,7 +10,8 @@ class CategoriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val movieCategoryTextView: TextView =
         itemView.findViewById(R.id.tv_item_movie_category)
 
-    fun bind(category: CategoryDto) {
+    fun bind(category: CategoryDto, callbackFunction: (title: String) -> Unit) {
         movieCategoryTextView.text = category.name
+        itemView.setOnClickListener { callbackFunction(category.name) }
     }
 }

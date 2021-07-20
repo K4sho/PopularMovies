@@ -18,12 +18,13 @@ import ru.skillbranch.searchmovie.presentation.recycler_views.adapters.Categorie
 import ru.skillbranch.searchmovie.presentation.recycler_views.adapters.MoviesRecyclerAdapter
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.BottomSpaceItemDecoration
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.RightSpaceItemDecoration
-import ru.skillbranch.searchmovie.data.repository.CategoriesModel
-import ru.skillbranch.searchmovie.data.repository.MoviesModel
+import ru.skillbranch.searchmovie.data.repository.CategoriesRepository
+import ru.skillbranch.searchmovie.data.repository.MoviesRepository
+import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.CategoriesViewHolder
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var moviesModel: MoviesModel
-    private lateinit var categoriesModel: CategoriesModel
+    private lateinit var moviesModel: MoviesRepository
+    private lateinit var categoriesModel: CategoriesRepository
     private lateinit var categoriesRecyclerView: RecyclerView
     private lateinit var moviesRecyclerView: RecyclerView
     private var categories = listOf<CategoryDto>()
@@ -38,17 +39,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerViews() {
-        lateinit var categoriesAdapter: CategoriesRecyclerAdapter
-        lateinit var moviesAdapter: MoviesRecyclerAdapter
-
         categoriesRecyclerView = findViewById(R.id.rv_categories)
         moviesRecyclerView = findViewById(R.id.rv_movies)
 
         val callbackForToast: (String) -> Unit = { showToast(it) }
 
         // Прокидываем адаптеры
-        categoriesAdapter = CategoriesRecyclerAdapter(callbackForToast)
-        moviesAdapter = MoviesRecyclerAdapter(callbackForToast)
+        val categoriesAdapter = CategoriesRecyclerAdapter(callbackForToast)
+        val moviesAdapter = MoviesRecyclerAdapter(callbackForToast)
         categoriesRecyclerView.adapter = categoriesAdapter
         moviesRecyclerView.adapter = moviesAdapter
 
@@ -74,13 +72,13 @@ class MainActivity : AppCompatActivity() {
         // DiffUtil
         val categoriesCallback = CategoriesCallback(categories, categoriesModel.getCategories())
         val categoriesDiff = DiffUtil.calculateDiff(categoriesCallback)
-        categoriesDiff.dispatchUpdatesTo(categoriesAdapter)
+        categoriesDiff.dispatchUpdatesTo(categoriesRecyclerView.adapter as RecyclerView.Adapter<CategoriesViewHolder>)
         val categories = categoriesModel.getCategories()
         categoriesAdapter.categories = categories
 
         val moviesCallback = MoviesCallback(movies, moviesModel.getMovies())
         val moviesDiff = DiffUtil.calculateDiff(moviesCallback)
-        moviesDiff.dispatchUpdatesTo(moviesAdapter)
+        moviesDiff.dispatchUpdatesTo(moviesRecyclerView.adapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
         movies = moviesModel.getMovies()
         moviesAdapter.movies = movies
     }
@@ -95,8 +93,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initDataSource() {
-        moviesModel = MoviesModel(MoviesDataSourceImpl())
-        categoriesModel = CategoriesModel(CategoriesDataSourceImpl())
+        moviesModel = MoviesRepository(MoviesDataSourceImpl())
+        categoriesModel = CategoriesRepository(CategoriesDataSourceImpl())
     }
 
     private fun updateData() {

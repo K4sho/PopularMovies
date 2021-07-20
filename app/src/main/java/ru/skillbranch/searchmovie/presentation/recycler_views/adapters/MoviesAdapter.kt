@@ -30,8 +30,7 @@ class MoviesRecyclerAdapter(private val callbackFunction: (title: String) -> Uni
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is MoviesViewHolder -> {
-                holder.bind(movies[position])
-                holder.itemView.setOnClickListener { callbackFunction(movies[position].title) }
+                holder.bind(movies[position], callbackFunction)
             }
             is EmptyMoviesListViewHolder -> {
                 holder.bind()
@@ -53,7 +52,9 @@ class MoviesRecyclerAdapter(private val callbackFunction: (title: String) -> Uni
             else -> movies.size
         }
     }
-}
 
-const val TYPE_EMPTY = 0
-const val TYPE_MOVIE = 1
+    companion object {
+        const val TYPE_EMPTY = 0
+        const val TYPE_MOVIE = 1
+    }
+}

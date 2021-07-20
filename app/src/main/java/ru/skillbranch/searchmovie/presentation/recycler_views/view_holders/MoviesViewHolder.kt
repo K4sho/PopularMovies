@@ -20,18 +20,19 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val star3ImageView: ImageView = itemView.findViewById(R.id.rating_star_3)
     private val star4ImageView: ImageView = itemView.findViewById(R.id.rating_star_4)
     private val star5ImageView: ImageView = itemView.findViewById(R.id.rating_star_5)
+    private val starsRating: List<ImageView> =
+        listOf(star1ImageView, star2ImageView, star3ImageView, star4ImageView, star5ImageView)
     private val movieAgeRatingTextView: TextView =
         itemView.findViewById(R.id.tv_item_movie_age_limit)
 
-    fun bind(movie: MovieDto) {
+    fun bind(movie: MovieDto, callbackFunction: (title: String) -> Unit) {
+        itemView.setOnClickListener { callbackFunction(movie.title) }
         movieCoverImageView.load(movie.imageUrl)
         movieTitleTextView.text = movie.title
         movieDescriptionTextView.text = movie.description
-        star1ImageView.setImageResource(if (movie.rateScore > 0) R.drawable.ic_star_selected else R.drawable.ic_star_unselected)
-        star2ImageView.setImageResource(if (movie.rateScore > 1) R.drawable.ic_star_selected else R.drawable.ic_star_unselected)
-        star3ImageView.setImageResource(if (movie.rateScore > 2) R.drawable.ic_star_selected else R.drawable.ic_star_unselected)
-        star4ImageView.setImageResource(if (movie.rateScore > 3) R.drawable.ic_star_selected else R.drawable.ic_star_unselected)
-        star5ImageView.setImageResource(if (movie.rateScore > 4) R.drawable.ic_star_selected else R.drawable.ic_star_unselected)
+        starsRating.forEachIndexed { index, star ->
+            star.setImageResource(if (movie.rateScore > index) R.drawable.ic_star_selected else R.drawable.ic_star_unselected)
+        }
         movieAgeRatingTextView.text = itemView.context.getString(
             R.string.age_restriction,
             movie.ageLimit.toString()

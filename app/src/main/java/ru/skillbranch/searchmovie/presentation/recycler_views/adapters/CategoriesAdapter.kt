@@ -19,8 +19,7 @@ class CategoriesRecyclerAdapter(private val callbackFunction: (title: String) ->
     }
 
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
-        holder.bind(categories[position])
-        holder.itemView.setOnClickListener { callbackFunction(categories[position].name) }
+        holder.bind(categories[position], callbackFunction)
     }
 
     override fun getItemCount(): Int {
