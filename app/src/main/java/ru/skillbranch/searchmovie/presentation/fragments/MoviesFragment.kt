@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.dto.CategoryDto
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.data.repository.CategoriesRepository
 import ru.skillbranch.searchmovie.data.repository.MoviesRepository
@@ -31,8 +30,8 @@ import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.Categ
 class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private lateinit var categoriesRecyclerView: RecyclerView
     private lateinit var moviesRecyclerView: RecyclerView
-    private val moviesModel = MoviesRepository(MoviesDataSourceImpl())
-    private val categoriesModel = CategoriesRepository(CategoriesDataSourceImpl())
+    private val moviesRepository = MoviesRepository(MoviesDataSourceImpl())
+    private val categoriesRepository = CategoriesRepository(CategoriesDataSourceImpl())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,8 +51,8 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         moviesRecyclerView = view.findViewById(R.id.rv_movies)
 
         // Прокидываем адаптеры
-        val categoriesAdapter = CategoriesRecyclerAdapter(this, categoriesModel.getCategories())
-        val moviesAdapter = MoviesRecyclerAdapter(this, moviesModel.getMovies())
+        val categoriesAdapter = CategoriesRecyclerAdapter(this, categoriesRepository.getCategories())
+        val moviesAdapter = MoviesRecyclerAdapter(this, moviesRepository.getMovies())
         categoriesRecyclerView.adapter = categoriesAdapter
         moviesRecyclerView.adapter = moviesAdapter
 
@@ -80,12 +79,12 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         moviesRecyclerView.addItemDecoration(bottomSpaceItemDecoration)
 
         // DiffUtil
-        val categoriesCallback = CategoriesCallback(categoriesModel.getCategories(), categoriesModel.getCategories())
+        val categoriesCallback = CategoriesCallback(categoriesRepository.getCategories(), categoriesRepository.getCategories())
         val categoriesDiff = DiffUtil.calculateDiff(categoriesCallback)
         categoriesDiff.dispatchUpdatesTo(categoriesRecyclerView.adapter as RecyclerView.Adapter<CategoriesViewHolder>)
-        val categories = categoriesModel.getCategories()
+        val categories = categoriesRepository.getCategories()
 
-        val moviesCallback = MoviesCallback(moviesModel.getMovies(), moviesModel.getMovies())
+        val moviesCallback = MoviesCallback(moviesRepository.getMovies(), moviesRepository.getMovies())
         val moviesDiff = DiffUtil.calculateDiff(moviesCallback)
         moviesDiff.dispatchUpdatesTo(moviesRecyclerView.adapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
@@ -99,10 +98,10 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         Toast.makeText(requireContext(), genreName, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onMovieClick(movie: MovieDto) {
+    override fun onMovieClick(position: Int) {
         parentFragmentManager.beginTransaction().replace(
             R.id.main_fragment_container,
-            MovieDetailsFragment.newInstance(movie)).commit()
+            MovieDetailsFragment.newInstance(position, moviesRepository)).addToBackStack(null).commit()
     }
 
 }

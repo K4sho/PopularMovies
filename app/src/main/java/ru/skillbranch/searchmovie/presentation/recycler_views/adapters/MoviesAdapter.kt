@@ -21,7 +21,7 @@ class MoviesRecyclerAdapter(private val listener: MovieClickListener,  private v
             TYPE_MOVIE -> MoviesViewHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_movie, parent, false)
-            )
+            , listener)
             else -> throw IllegalStateException()
         }
     }
@@ -29,7 +29,7 @@ class MoviesRecyclerAdapter(private val listener: MovieClickListener,  private v
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is MoviesViewHolder -> {
-                holder.bind(movies[position], listener)
+                holder.bind(movies[position], position)
             }
             is EmptyMoviesListViewHolder -> {
                 holder.bind()

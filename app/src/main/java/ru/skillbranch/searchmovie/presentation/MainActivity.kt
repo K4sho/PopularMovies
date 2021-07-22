@@ -2,7 +2,9 @@ package ru.skillbranch.searchmovie.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.presentation.fragments.MoviesFragment
@@ -16,14 +18,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         if (savedInstanceState == null) {
             startFragment = MoviesFragment.newInstance()
             startFragment?.apply {
-                supportFragmentManager.beginTransaction().add(
-                    R.id.main_fragment_container,
-                    this, INITIAL_FRAGMENT_TAG
-                ).commit()
+                supportFragmentManager.beginTransaction().add(R.id.main_fragment_container,
+                    this, INITIAL_FRAGMENT_TAG).commit()
             }
         } else {
             startFragment = supportFragmentManager.findFragmentByTag(INITIAL_FRAGMENT_TAG)
@@ -33,21 +32,25 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.bottom_menu_home -> {
-                    supportFragmentManager.beginTransaction().replace(
-                        R.id.main_fragment_container,
-                        MoviesFragment.newInstance()
-                    ).commit()
-                    return@setOnItemSelectedListener true
+                    loadFragment(MoviesFragment.newInstance())
+                    true
                 }
                 R.id.bottom_menu_profile -> {
-                    supportFragmentManager.beginTransaction().replace(
-                        R.id.main_fragment_container,
-                        ProfileFragment.newInstance()
-                    ).commit()
-                    return@setOnItemSelectedListener true
+                    loadFragment(ProfileFragment.newInstance())
+                    true
                 }
+                else -> false
             }
-            false
+        }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.main_fragment_container, fragment).
+            commit()
         }
     }
 

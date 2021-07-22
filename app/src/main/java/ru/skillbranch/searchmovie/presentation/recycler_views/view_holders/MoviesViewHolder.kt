@@ -9,7 +9,7 @@ import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
 
-class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class MoviesViewHolder(itemView: View, private val movieClickListener: MovieClickListener) : RecyclerView.ViewHolder(itemView) {
     private val movieCoverImageView: ImageView =
         itemView.findViewById(R.id.iv_item_movie_cover)
     private val movieTitleTextView: TextView =
@@ -26,8 +26,8 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val movieAgeRatingTextView: TextView =
         itemView.findViewById(R.id.tv_item_movie_age_limit)
 
-    fun bind(movie: MovieDto, listener: MovieClickListener) {
-        itemView.setOnClickListener { listener.onMovieClick(movie) }
+    fun bind(movie: MovieDto, position: Int) {
+        itemView.setOnClickListener { movieClickListener.onMovieClick(position) }
         movieCoverImageView.load(movie.imageUrl)
         movieTitleTextView.text = movie.title
         movieDescriptionTextView.text = movie.description
