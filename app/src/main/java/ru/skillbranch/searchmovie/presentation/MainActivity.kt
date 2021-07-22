@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         val rightSpaceItemDecoration = RightSpaceItemDecoration(rightSpace)
         categoriesRecyclerView.addItemDecoration(rightSpaceItemDecoration)
 
-        val itemDecoration = ItemMovieOffsetDecoration(2,
+        val itemDecoration = ItemMovieOffsetDecoration(moviesRecyclerViewColumnsCount,
             this?.resources?.getDimensionPixelSize(R.dimen.item_movie_width) ?: 150)
         val bottomSpace = resources.getDimension(R.dimen.item_movie_bottom_margin).toInt()
         val bottomSpaceItemDecoration = BottomSpaceItemDecoration(bottomSpace)
