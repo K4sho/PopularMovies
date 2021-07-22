@@ -5,13 +5,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.dto.CategoryDto
+import ru.skillbranch.searchmovie.presentation.fragments.listeners.CategoriesListener
 
 class CategoriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val movieCategoryTextView: TextView =
         itemView.findViewById(R.id.tv_item_movie_category)
 
-    fun bind(category: CategoryDto, callbackFunction: (title: String) -> Unit) {
+    fun bind(category: CategoryDto, listener: CategoriesListener) {
         movieCategoryTextView.text = category.name
-        itemView.setOnClickListener { callbackFunction(category.name) }
+        itemView.setOnClickListener { listener.onCategoryClick(category.name) }
     }
 }
