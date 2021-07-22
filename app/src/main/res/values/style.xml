@@ -101,4 +101,16 @@
         <item name="android:textSize">@dimen/item_movie_description_text_size</item>
     </style>
 
+    <style name="style_genre" parent="@style/TextAppearance.AppCompat">
+        <item name="android:background">@drawable/frame_for_text_genre</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_for_genre</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:layout_marginEnd">@dimen/margin_end_for_genre_in_recycler_view</item>
+        <item name="android:paddingTop">@dimen/padding_top_for_genre_in_recycler_view</item>
+        <item name="android:paddingBottom">@dimen/padding_bottom_for_genre_in_recycler_view</item>
+        <item name="android:paddingStart">@dimen/padding_start_and_end_for_genre_in_recycler_view</item>
+        <item name="android:paddingEnd">@dimen/padding_start_and_end_for_genre_in_recycler_view</item>
+    </style>
+
 </resources>

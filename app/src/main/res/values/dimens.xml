@@ -122,5 +122,39 @@
     <dimen name="item_movie_category_top_padding">4dp</dimen>
     <dimen name="item_movie_category_bottom_padding">4dp</dimen>
 
+    <!-- PROFILE -->
+    <dimen name="margin_top_for_user_profile_card_view">48dp</dimen>
+    <dimen name="margin_top_for_user_profile_name">64dp</dimen>
+    <dimen name="margin_top_for_user_profile_email">2dp</dimen>
+    <dimen name="margin_top_for_user_profile_title_interests">56dp</dimen>
+    <dimen name="margin_top_for_user_profile_genres">14dp</dimen>
+    <dimen name="margin_top_for_user_profile_title_personal_data">40dp</dimen>
+    <dimen name="margin_top_for_user_profile_title_settings">40dp</dimen>
+    <dimen name="margin_top_for_user_profile_title_annex">40dp</dimen>
+    <dimen name="margin_top_for_user_profile_settings_item">20dp</dimen>
+    <dimen name="margin_top_for_user_profile_arrow_to_right">30dp</dimen>
+    <dimen name="margin_top_for_profile_info_button">40dp</dimen>
+    <dimen name="margin_end_for_genre_in_recycler_view">6dp</dimen>
+    <dimen name="margin_end_for_user_profile_card_view">6dp</dimen>
+    <dimen name="margin_bottom_for_user_profile_button">96dp</dimen>
+    <dimen name="corner_radius_for_text_genre">10dp</dimen>
+    <dimen name="corner_radius_for_user_profile_card_view">40dp</dimen>
+    <dimen name="corner_radius_for_user_profile_button">10dp</dimen>
+    <dimen name="guideline_right_and_left_for_description_card_view">20dp</dimen>
+    <dimen name="guideline_right_and_left_for_profile_info_layout">20dp</dimen>
+
+    <dimen name="padding_start_and_end_for_genre_in_recycler_view">12dp</dimen>
+    <dimen name="padding_top_for_genre_in_recycler_view">6dp</dimen>
+    <dimen name="padding_bottom_for_genre_in_recycler_view">4dp</dimen>
+
+    <dimen name="width_of_stroke_for_frames">1dp</dimen>
+    <dimen name="height_and_width_for_user_profile_card_view">72dp</dimen>
     <dimen name="item_rating_and_limit_top_margin">6dp</dimen>
+
+    <dimen name="text_size_for_genre">10sp</dimen>
+    <dimen name="text_size_for_user_profile_name">20sp</dimen>
+    <dimen name="text_size_for_user_profile_email">14sp</dimen>
+    <dimen name="text_size_for_user_profile_titles">16sp</dimen>
+    <dimen name="text_size_for_user_profile_grey_hints">12sp</dimen>
+    <dimen name="text_size_for_user_profile_settings_item">14sp</dimen>
 </resources>
