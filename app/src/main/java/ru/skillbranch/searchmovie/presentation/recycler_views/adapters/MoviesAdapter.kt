@@ -21,7 +21,7 @@ class MoviesRecyclerAdapter(private val listener: MovieClickListener,  private v
             TYPE_MOVIE -> MoviesViewHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_movie, parent, false)
-            , listener)
+                , listener)
             else -> throw IllegalStateException()
         }
     }

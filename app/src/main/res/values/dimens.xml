@@ -149,7 +149,6 @@
 
     <dimen name="width_of_stroke_for_frames">1dp</dimen>
     <dimen name="height_and_width_for_user_profile_card_view">72dp</dimen>
-    <dimen name="item_rating_and_limit_top_margin">6dp</dimen>
 
     <dimen name="text_size_for_genre">10sp</dimen>
     <dimen name="text_size_for_user_profile_name">20sp</dimen>
@@ -157,4 +156,5 @@
     <dimen name="text_size_for_user_profile_titles">16sp</dimen>
     <dimen name="text_size_for_user_profile_grey_hints">12sp</dimen>
     <dimen name="text_size_for_user_profile_settings_item">14sp</dimen>
+    <dimen name="item_rating_and_limit_top_margin">6dp</dimen>
 </resources>
