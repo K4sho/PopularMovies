@@ -17,21 +17,20 @@ import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.data.repository.MoviesRepository
 import ru.skillbranch.searchmovie.data.sources.movies.MoviesDataSourceImpl
 
-class MovieDetailsFragment(private val movies: MoviesRepository) : Fragment() {
+class MovieDetailsFragment : Fragment() {
     private var position: Int = 0
+    private var movies = MoviesRepository(MoviesDataSourceImpl())
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.e("QQ", "MovieDetailsFragment1")
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("QQ", "MovieDetailsFragment2")
         position = arguments?.getInt(MOVIE_POSITION) ?: 0
         val movie = movies.getMovies()[position]
         val ageLimit = "${movie.ageLimit}+"
@@ -72,8 +71,8 @@ class MovieDetailsFragment(private val movies: MoviesRepository) : Fragment() {
         const val MAX_RATE_SCORE = 5
         const val MOVIE_POSITION = "moviePosition"
 
-        fun newInstance(moviePosition: Int, movies: MoviesRepository): MovieDetailsFragment {
-            val fragment = MovieDetailsFragment(movies)
+        fun newInstance(moviePosition: Int): MovieDetailsFragment {
+            val fragment = MovieDetailsFragment()
             val args = Bundle()
             args.putInt(MOVIE_POSITION, moviePosition)
             fragment.arguments = args
