@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="artist_rounded_iv" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+    <style name="cover_rounded_iv" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+    <style name="age_limit">
+        <item name="android:textSize">13.8sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="date_movie">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="genre">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="movie_name">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="movie_description">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="actors_name">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="horizontal_movie_banner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="shapeAppearanceOverlay">@style/cover_rounded_iv</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:background">@drawable/info_background</item>
+    </style>
+
+    <style name="artist_image">
+        <item name="android:layout_width">@dimen/artist_image_width</item>
+        <item name="android:layout_height">@dimen/artist_image_height</item>
+        <item name="android:layout_marginTop">@dimen/artist_image_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/artist_image_margin_start</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="shapeAppearanceOverlay">@style/artist_rounded_iv</item>
+    </style>
+
+    <style name="first_artist_image">
+        <item name="android:layout_width">@dimen/artist_image_width</item>
+        <item name="android:layout_height">@dimen/artist_image_height</item>
+        <item name="android:layout_marginTop">@dimen/artist_image_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/first_artist_image_margin_start</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="shapeAppearanceOverlay">@style/artist_rounded_iv</item>
+    </style>
+
+    <style name="BaseText">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="BaseText.movie_category">
+        <item name="android:textSize">@dimen/movie_category_text_size</item>
+        <item name="android:paddingStart">@dimen/item_movie_category_start_padding</item>
+        <item name="android:paddingEnd">@dimen/item_movie_category_end_padding</item>
+        <item name="android:paddingTop">@dimen/item_movie_category_top_padding</item>
+        <item name="android:paddingBottom">@dimen/item_movie_category_bottom_padding</item>
+        <item name="android:background">@drawable/ic_rectangle</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BaseText.ArtistsTitle">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/artist_title_text_size</item>
+    </style>
+
+    <style name="BaseText.artist_name">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/artist_name_text_size</item>
+    </style>
+
+    <style name="BaseText.popular_now">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/popular_now_text_size</item>
+    </style>
+
+    <style name="BaseText.item_movie_title">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/item_movie_title_text_size</item>
+    </style>
+
+    <style name="BaseText.item_movie_desc">
+        <item name="android:textSize">@dimen/item_movie_description_text_size</item>
+    </style>
+
+</resources>

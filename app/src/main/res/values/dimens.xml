@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="actors_name_start_offset">12dp</dimen>
+    <dimen name="actors_name_top_offset">12dp</dimen>
+    <dimen name="main_left_margin">20dp</dimen>
+    <dimen name="margin_btw_actors">10dp</dimen>
+    <dimen name="actors_image_width">150dp</dimen>
+    <dimen name="actors_image_height">196dp</dimen>
+    <dimen name="bottom_margin_actors_card">46dp</dimen>
+    <dimen name="movie_card_info_top_margin">224dp</dimen>
+    <dimen name="age_limit_top_margin">32dp</dimen>
+    <dimen name="genre_margin_start_in_rect">10dp</dimen>
+    <dimen name="genre_margin_top_in_rect">2dp</dimen>
+    <dimen name="date_movie_margin_start">14dp</dimen>
+    <dimen name="date_movie_margin_top">32dp</dimen>
+    <dimen name="age_limit_image_margin_top">42dp</dimen>
+    <dimen name="age_limit_margin_top">54dp</dimen>
+    <dimen name="age_limit_margin_end">28dp</dimen>
+    <dimen name="movie_desc_margin_top">20dp</dimen>
+    <dimen name="movie_desc_margin_end">8dp</dimen>
+    <dimen name="movie_actors_margin_top">35dp</dimen>
+    <dimen name="movie_info_card_padding_bottom">46dp</dimen>
+    <dimen name="movie_tittle_margin_top">16dp</dimen>
+    <dimen name="artist_image_width">150dp</dimen>
+    <dimen name="artist_image_height">196dp</dimen>
+    <dimen name="artist_image_corner">10dp</dimen>
+    <dimen name="artist_image_margin_top">16dp</dimen>
+    <dimen name="artist_image_margin_start">10dp</dimen>
+    <dimen name="first_artist_image_margin_start">@dimen/main_left_margin</dimen>
+    <dimen name="rating_start_margin_top">8dp</dimen>
+
+    <dimen name="movie_title_text_size">20sp</dimen>
+    <dimen name="movie_title_top_margin">16dp</dimen>
+    <dimen name="movie_title_start_margin">16dp</dimen>
+
+    <dimen name="age_rating_text_size">14sp</dimen>
+    <dimen name="age_rating_top_margin">42dp</dimen>
+    <dimen name="age_rating_end_margin">@dimen/main_left_margin</dimen>
+
+    <dimen name="movie_category_text_size">10sp</dimen>
+    <dimen name="movie_category_top_margin">32dp</dimen>
+    <dimen name="movie_category_start_margin">@dimen/main_left_margin</dimen>
+
+    <dimen name="movie_date_text_size">12sp</dimen>
+    <dimen name="movie_date_top_margin">32dp</dimen>
+    <dimen name="movie_date_start_margin">@dimen/main_left_margin</dimen>
+
+    <dimen name="movie_description_text_size">14sp</dimen>
+    <dimen name="movie_description_top_margin">16dp</dimen>
+    <dimen name="movie_description_start_margin">@dimen/main_left_margin</dimen>
+    <dimen name="movie_description_end_margin">16dp</dimen>
+
+    <dimen name="artist_title_text_size">16sp</dimen>
+    <dimen name="artist_title_top_margin">35sp</dimen>
+    <dimen name="artist_title_start_margin">@dimen/main_left_margin</dimen>
+
+    <dimen name="artist_name_text_size">12sp</dimen>
+    <dimen name="artist_name_top_margin">12sp</dimen>
+    <dimen name="artist_name_start_margin">12sp</dimen>
+
+    <dimen name="movie_info_card_top_margin">224dp</dimen>
+    <dimen name="movie_info_card_bottom_padding">46dp</dimen>
+    <dimen name="movie_info_card_corner_radius">20dp</dimen>
+
+    <dimen name="artists_scroll_end_margin">10dp</dimen>
+
+    <dimen name="cover_corner_radius">20dp</dimen>
+
+    <dimen name="artist_image_corner_radius">10dp</dimen>
+    <dimen name="artist_image_top_margin">16dp</dimen>
+    <dimen name="artist_image_start_margin">10dp</dimen>
+    <dimen name="first_artist_image_start_margin">@dimen/main_left_margin</dimen>
+
+    <dimen name="rating_star_top_margin">8dp</dimen>
+    <dimen name="rating_star_start_margin">2dp</dimen>
+    <dimen name="first_rating_star_start_margin">@dimen/main_left_margin</dimen>
+
+    <dimen name="search_button_top_margin">30dp</dimen>
+    <dimen name="search_button_end_margin">20dp</dimen>
+    <dimen name="age_limit_bottom_margin">4dp</dimen>
+
+    <dimen name="popular_now_text_size">16sp</dimen>
+    <dimen name="popular_now_top_margin">22dp</dimen>
+    <dimen name="popular_now_start_margin">20dp</dimen>
+
+    <dimen name="categories_recycler_view_top_margin">12dp</dimen>
+    <dimen name="categories_recycler_view_start_margin">20dp</dimen>
+
+    <dimen name="movies_recycler_view_top_margin">16dp</dimen>
+    <dimen name="movies_recycler_view_start_margin">20dp</dimen>
+
+    <dimen name="item_movie_width">150dp</dimen>
+    <dimen name="item_movie_height">365dp</dimen>
+    <dimen name="item_movie_end_margin">20dp</dimen>
+    <dimen name="item_movie_bottom_margin">50dp</dimen>
+
+    <dimen name="item_movie_cover_height">216dp</dimen>
+
+    <dimen name="item_movie_title_text_size">14sp</dimen>
+    <dimen name="item_movie_title_top_margin">8dp</dimen>
+    <dimen name="item_movie_title_start_margin">4dp</dimen>
+
+    <dimen name="item_movie_description_text_size">12sp</dimen>
+    <dimen name="item_movie_description_top_margin">10dp</dimen>
+    <dimen name="item_movie_description_start_margin">4dp</dimen>
+
+    <dimen name="item_movie_star_width">14dp</dimen>
+    <dimen name="item_movie_star_height">14dp</dimen>
+    <dimen name="item_movie_first_star_start_margin">5dp</dimen>
+    <dimen name="item_movie_star_start_margin">2dp</dimen>
+    <dimen name="item_movie_star_bottom_margin">6dp</dimen>
+
+    <dimen name="item_movie_age_restriction_width">20dp</dimen>
+    <dimen name="item_movie_age_restriction_height">20dp</dimen>
+    <dimen name="item_movie_age_restriction_text_size">7sp</dimen>
+    <dimen name="item_movie_age_restriction_end_margin">2dp</dimen>
+    <dimen name="item_movie_age_restriction_bottom_margin">2dp</dimen>
+
+    <dimen name="item_movie_category_end_margin">6dp</dimen>
+    <dimen name="item_movie_category_start_padding">10dp</dimen>
+    <dimen name="item_movie_category_end_padding">10dp</dimen>
+    <dimen name="item_movie_category_top_padding">4dp</dimen>
+    <dimen name="item_movie_category_bottom_padding">4dp</dimen>
+
+    <dimen name="item_rating_and_limit_top_margin">6dp</dimen>
+</resources>
