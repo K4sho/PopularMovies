@@ -101,7 +101,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     override fun onMovieClick(position: Int) {
         parentFragmentManager.beginTransaction().replace(
             R.id.main_fragment_container,
-            MovieDetailsFragment.newInstance(position, moviesRepository)).addToBackStack(null).commit()
+            MovieDetailsFragment.newInstance(position)).addToBackStack(null).commit()
     }
 
 }
