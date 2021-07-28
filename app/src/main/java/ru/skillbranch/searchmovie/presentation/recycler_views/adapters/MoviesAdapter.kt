@@ -5,13 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.dto.MovieDto
+import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.EmptyMoviesListViewHolder
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.MoviesViewHolder
 
-class MoviesRecyclerAdapter(private val callbackFunction: (title: String) -> Unit) :
+class MoviesRecyclerAdapter(private val listener: MovieClickListener,  private var movies: List<MovieDto>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    lateinit var movies: List<MovieDto>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -22,7 +21,7 @@ class MoviesRecyclerAdapter(private val callbackFunction: (title: String) -> Uni
             TYPE_MOVIE -> MoviesViewHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_movie, parent, false)
-            )
+                , listener)
             else -> throw IllegalStateException()
         }
     }
@@ -30,7 +29,7 @@ class MoviesRecyclerAdapter(private val callbackFunction: (title: String) -> Uni
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is MoviesViewHolder -> {
-                holder.bind(movies[position], callbackFunction)
+                holder.bind(movies[position], position)
             }
             is EmptyMoviesListViewHolder -> {
                 holder.bind()
