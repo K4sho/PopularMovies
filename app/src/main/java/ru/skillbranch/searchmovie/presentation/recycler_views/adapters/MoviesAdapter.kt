@@ -9,7 +9,10 @@ import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickLis
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.EmptyMoviesListViewHolder
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.MoviesViewHolder
 
-class MoviesRecyclerAdapter(private val listener: MovieClickListener,  private var movies: List<MovieDto>) :
+class MoviesRecyclerAdapter(
+    private val listener: MovieClickListener,
+    private var movies: List<MovieDto>
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -20,8 +23,8 @@ class MoviesRecyclerAdapter(private val listener: MovieClickListener,  private v
             )
             TYPE_MOVIE -> MoviesViewHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_movie, parent, false)
-                , listener)
+                    .inflate(R.layout.item_movie, parent, false), listener
+            )
             else -> throw IllegalStateException()
         }
     }
@@ -38,6 +41,11 @@ class MoviesRecyclerAdapter(private val listener: MovieClickListener,  private v
 
     }
 
+    fun setData(newMovies: List<MovieDto>) {
+        movies = newMovies
+        notifyDataSetChanged()
+    }
+
     override fun getItemViewType(position: Int): Int {
         return when (movies.isEmpty()) {
             true -> TYPE_EMPTY
@@ -46,7 +54,7 @@ class MoviesRecyclerAdapter(private val listener: MovieClickListener,  private v
     }
 
     override fun getItemCount(): Int {
-        return when(movies.isEmpty()) {
+        return when (movies.isEmpty()) {
             true -> 1
             else -> movies.size
         }

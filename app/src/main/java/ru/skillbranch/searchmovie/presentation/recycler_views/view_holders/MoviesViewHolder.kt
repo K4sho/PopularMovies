@@ -9,7 +9,8 @@ import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
 
-class MoviesViewHolder(itemView: View, private val movieClickListener: MovieClickListener) : RecyclerView.ViewHolder(itemView) {
+class MoviesViewHolder(itemView: View, private val movieClickListener: MovieClickListener) :
+    RecyclerView.ViewHolder(itemView) {
     private val movieCoverImageView: ImageView =
         itemView.findViewById(R.id.iv_item_movie_cover)
     private val movieTitleTextView: TextView =
