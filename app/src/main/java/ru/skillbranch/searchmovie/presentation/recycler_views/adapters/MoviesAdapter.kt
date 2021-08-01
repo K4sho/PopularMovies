@@ -1,5 +1,6 @@
 package ru.skillbranch.searchmovie.presentation.recycler_views.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,7 +33,7 @@ class MoviesRecyclerAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is MoviesViewHolder -> {
-                holder.bind(movies[position], position)
+                holder.bind(movies[position])
             }
             is EmptyMoviesListViewHolder -> {
                 holder.bind()

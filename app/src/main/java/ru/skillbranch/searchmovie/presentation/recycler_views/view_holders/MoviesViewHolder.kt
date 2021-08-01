@@ -27,8 +27,8 @@ class MoviesViewHolder(itemView: View, private val movieClickListener: MovieClic
     private val movieAgeRatingTextView: TextView =
         itemView.findViewById(R.id.tv_item_movie_age_limit)
 
-    fun bind(movie: MovieDto, position: Int) {
-        itemView.setOnClickListener { movieClickListener.onMovieClick(position) }
+    fun bind(movie: MovieDto) {
+        itemView.setOnClickListener { movieClickListener.onMovieClick(movie) }
         movieCoverImageView.load(movie.imageUrl)
         movieTitleTextView.text = movie.title
         movieDescriptionTextView.text = movie.description

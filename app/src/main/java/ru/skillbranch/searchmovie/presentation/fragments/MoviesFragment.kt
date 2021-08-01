@@ -116,10 +116,10 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         Toast.makeText(requireContext(), genreName, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onMovieClick(position: Int) {
+    override fun onMovieClick(movie: MovieDto) {
         parentFragmentManager.beginTransaction().replace(
             R.id.main_fragment_container,
-            MovieDetailsFragment.newInstance(position)
+            MovieDetailsFragment.newInstance(movie)
         ).addToBackStack(null).commit()
     }
 
@@ -134,9 +134,9 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
                 delay(400L)
                 moviesAdapter.setData(movieList)
             } catch (e: CancellationException) {
-                Log.e("Cotoutine", "Catch ERROR")
+                Log.e("Coroutine", "Catch ERROR")
                 val movieList: List<MovieDto> = emptyList()
-                Toast.makeText(requireContext(), "Нет фильмов для отображения", Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), "Нет фильмов для отображения", Toast.LENGTH_LONG).show()
                 moviesAdapter.setData(movieList)
             }
         }
