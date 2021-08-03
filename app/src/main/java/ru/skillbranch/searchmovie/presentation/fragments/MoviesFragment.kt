@@ -39,6 +39,11 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private val categoriesAdapter =
         CategoriesRecyclerAdapter(this, categoriesRepository.getCategories())
     private val moviesAdapter = MoviesRecyclerAdapter(this, moviesRepository.getMovies())
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        val movieList: List<MovieDto> = emptyList()
+        moviesAdapter.setData(movieList)
+        Log.d("CoroutineException", "Нет фильмов для отображения $exception")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -128,17 +133,9 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     }
 
     private suspend fun setData() = coroutineScope {
-        val download: Job = launch {
-            try {
-                val movieList: List<MovieDto> = moviesRepository.getMovies().shuffled()
-                delay(400L)
-                moviesAdapter.setData(movieList)
-            } catch (e: CancellationException) {
-                Log.e("Coroutine", "Catch ERROR")
-                val movieList: List<MovieDto> = emptyList()
-                Toast.makeText(requireContext(), "Нет фильмов для отображения", Toast.LENGTH_LONG).show()
-                moviesAdapter.setData(movieList)
-            }
+        val download: Job = launch(coroutineExceptionHandler) {
+            val movieList: List<MovieDto> = moviesRepository.getRefreshMovies()
+            moviesAdapter.setData(movieList)
         }
         download.join()
     }
