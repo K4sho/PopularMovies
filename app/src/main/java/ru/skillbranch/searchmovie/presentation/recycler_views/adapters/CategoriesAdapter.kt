@@ -8,8 +8,10 @@ import ru.skillbranch.searchmovie.data.dto.CategoryDto
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.CategoriesListener
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.CategoriesViewHolder
 
-class CategoriesRecyclerAdapter(private val listener: CategoriesListener, private var categories: List<CategoryDto>) :
+class CategoriesRecyclerAdapter(private val listener: CategoriesListener) :
     RecyclerView.Adapter<CategoriesViewHolder>() {
+
+    private var categories: List<CategoryDto> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesViewHolder {
         val itemView =
@@ -24,5 +26,9 @@ class CategoriesRecyclerAdapter(private val listener: CategoriesListener, privat
 
     override fun getItemCount(): Int {
         return categories.size
+    }
+
+    fun initData(initCategories: List<CategoryDto>) {
+        categories = initCategories
     }
 }

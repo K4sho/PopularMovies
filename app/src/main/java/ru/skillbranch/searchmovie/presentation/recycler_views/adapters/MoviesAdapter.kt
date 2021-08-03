@@ -11,10 +11,11 @@ import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.Empty
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.MoviesViewHolder
 
 class MoviesRecyclerAdapter(
-    private val listener: MovieClickListener,
-    private var movies: List<MovieDto>
+    private val listener: MovieClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var movies: List<MovieDto> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -40,6 +41,10 @@ class MoviesRecyclerAdapter(
             }
         }
 
+    }
+
+    fun initData(initMovies: List<MovieDto>) {
+        movies = initMovies
     }
 
     fun setData(newMovies: List<MovieDto>) {
