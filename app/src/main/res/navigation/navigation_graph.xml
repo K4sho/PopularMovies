@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/navigation_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/nav_movies_fragment">
 
+    <fragment
+        android:id="@+id/nav_movies_fragment"
+        android:name="ru.skillbranch.searchmovie.presentation.fragments.MoviesFragment"
+        android:label="MoviesFragment"
+        tools:layout="@layout/fragment_movies_list">
+        <action
+            android:id="@+id/action_nav_movie_fragment_to_nav_movies_details_fragment"
+            app:destination="@id/nav_movies_details_fragment"
+            app:launchSingleTop="true"
+            app:popUpToSaveState="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_movies_details_fragment"
+        android:name="ru.skillbranch.searchmovie.presentation.fragments.MovieDetailsFragment"
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details" />
+
+    <fragment
+        android:id="@+id/nav_profile_fragment"
+        android:name="ru.skillbranch.searchmovie.presentation.fragments.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -2,59 +2,49 @@ package ru.skillbranch.searchmovie.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.presentation.fragments.MoviesFragment
-import ru.skillbranch.searchmovie.presentation.fragments.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private var startFragment: Fragment? = null
+    private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (savedInstanceState == null) {
-            startFragment = MoviesFragment.newInstance()
-            startFragment?.apply {
-                supportFragmentManager.beginTransaction().add(
-                    R.id.main_fragment_container,
-                    this, INITIAL_FRAGMENT_TAG
-                ).commit()
-            }
-        } else {
-            startFragment = supportFragmentManager.findFragmentByTag(INITIAL_FRAGMENT_TAG)
-        }
+        navController = Navigation.findNavController(this, R.id.nav_fragment_container)
 
         bottomNavigationView = findViewById(R.id.bottom_nav_view)
-        bottomNavigationView.setOnItemSelectedListener {
+        bottomNavigationView.setupWithNavController(navController)
+        bottomNavigationView.setOnItemReselectedListener {
             when (it.itemId) {
-                R.id.bottom_menu_home -> {
-                    loadFragment(MoviesFragment.newInstance())
-                    true
+                R.id.nav_movies_fragment -> {
+                    if (navController.currentDestination?.id == R.id.nav_movies_fragment) {
+                        navController.popBackStack(R.id.nav_movies_fragment, false)
+                    } else if (navController.currentDestination?.id == R.id.nav_movies_details_fragment) {
+                        navController.popBackStack(R.id.nav_movies_details_fragment, true)
+                        navController.navigate(R.id.nav_movies_fragment)
+                    }
                 }
-                R.id.bottom_menu_profile -> {
-                    loadFragment(ProfileFragment.newInstance())
-                    true
-                }
-                else -> false
             }
         }
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        }
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.main_fragment_container, fragment).commit()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
     }
 
-    companion object {
-        const val INITIAL_FRAGMENT_TAG = "InitialFragment"
+    override fun onBackPressed() {
+        if (navController.currentDestination?.id != R.id.nav_movies_fragment &&
+            bottomNavigationView.selectedItemId != R.id.nav_movies_fragment
+        ) {
+            bottomNavigationView.selectedItemId = R.id.nav_movies_fragment
+        } else {
+            super.onBackPressed()
+        }
     }
 }

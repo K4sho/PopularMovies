@@ -1,12 +1,15 @@
 package ru.skillbranch.searchmovie.presentation.recycler_views.adapters
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
+import ru.skillbranch.searchmovie.presentation.recycler_views.MoviesCallback
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.EmptyMoviesListViewHolder
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.MoviesViewHolder
 
@@ -43,13 +46,12 @@ class MoviesRecyclerAdapter(
 
     }
 
-    fun initData(initMovies: List<MovieDto>) {
-        movies = initMovies
-    }
-
     fun setData(newMovies: List<MovieDto>) {
+        val moviesCallback =
+            MoviesCallback(movies, newMovies)
+        val moviesDiff = DiffUtil.calculateDiff(moviesCallback)
         movies = newMovies
-        notifyDataSetChanged()
+        moviesDiff.dispatchUpdatesTo(this)
     }
 
     override fun getItemViewType(position: Int): Int {

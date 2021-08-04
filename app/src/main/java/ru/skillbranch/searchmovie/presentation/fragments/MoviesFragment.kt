@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +44,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private val categoriesAdapter =
         CategoriesRecyclerAdapter(this)
     private val moviesAdapter = MoviesRecyclerAdapter(this)
+    private lateinit var navController: NavController
 
     private val moviesObserver = Observer { items: List<MovieDto> ->
         moviesAdapter.setData(items)
@@ -49,7 +52,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     }
 
     private val categoriesObserver = Observer { items: List<CategoryDto> ->
-        categoriesAdapter.initData(items)
+        categoriesAdapter.setData(items)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,6 +72,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = view.findNavController()
         pullToRefreshLayout = view.findViewById(R.id.movies_refresh_layout)
         pullToRefreshLayout?.setOnRefreshListener {
             viewModel.handleRefreshMovies()
@@ -79,7 +83,6 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private fun initRecyclersGenreAndMovies(view: View) {
         categoriesRecyclerView = view.findViewById(R.id.rv_categories)
         moviesRecyclerView = view.findViewById(R.id.rv_movies)
-
 
         // Прокидываем адаптеры
         categoriesRecyclerView.adapter = categoriesAdapter
@@ -104,25 +107,12 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
 
         val itemDecoration = ItemMovieOffsetDecoration(
             moviesRecyclerViewColumnsCount,
-            this?.resources?.getDimensionPixelSize(R.dimen.item_movie_width) ?: 150
+            this.resources.getDimensionPixelSize(R.dimen.item_movie_width)
         )
         val bottomSpace = resources.getDimension(R.dimen.item_movie_bottom_margin).toInt()
         val bottomSpaceItemDecoration = BottomSpaceItemDecoration(bottomSpace)
         moviesRecyclerView.addItemDecoration(itemDecoration)
         moviesRecyclerView.addItemDecoration(bottomSpaceItemDecoration)
-
-        // DiffUtil
-        val categoriesCallback = CategoriesCallback(
-            viewModel.getCategories(),
-            viewModel.getCategories()
-        )
-        val categoriesDiff = DiffUtil.calculateDiff(categoriesCallback)
-        categoriesDiff.dispatchUpdatesTo(categoriesRecyclerView.adapter as RecyclerView.Adapter<CategoriesViewHolder>)
-
-        val moviesCallback =
-            MoviesCallback(viewModel.getMovies(), viewModel.getMovies())
-        val moviesDiff = DiffUtil.calculateDiff(moviesCallback)
-        moviesDiff.dispatchUpdatesTo(moviesRecyclerView.adapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
 
     companion object {
@@ -135,9 +125,21 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     }
 
     override fun onMovieClick(movie: MovieDto) {
-        parentFragmentManager.beginTransaction().replace(
-            R.id.main_fragment_container,
-            MovieDetailsFragment.newInstance(movie)
-        ).addToBackStack(null).commit()
+        val bundle = Bundle()
+        bundle.putString(MovieDetailsFragment.MOVIE_NAME, movie.title)
+        bundle.putString(MovieDetailsFragment.MOVIE_DESCRIPTION, movie.description)
+        bundle.putInt(MovieDetailsFragment.MOVIE_RATE_SCORE, movie.rateScore)
+        bundle.putInt(MovieDetailsFragment.MOVIE_AGE, movie.ageLimit)
+        bundle.putString(MovieDetailsFragment.MOVIE_IMAGE_URL, movie.imageUrl)
+        bundle.putString(MovieDetailsFragment.ACTOR_IMAGE_URL_1, movie.actors[0].imageUrl)
+        bundle.putString(MovieDetailsFragment.ACTOR_IMAGE_URL_2, movie.actors[1].imageUrl)
+        bundle.putString(MovieDetailsFragment.ACTOR_IMAGE_URL_3, movie.actors[2].imageUrl)
+        bundle.putString(MovieDetailsFragment.ACTOR_NAME_1, movie.actors[0].name)
+        bundle.putString(MovieDetailsFragment.ACTOR_NAME_2, movie.actors[1].name)
+        bundle.putString(MovieDetailsFragment.ACTOR_NAME_3, movie.actors[2].name)
+        navController.navigate(
+            R.id.action_nav_movie_fragment_to_nav_movies_details_fragment,
+            bundle
+        )
     }
 }

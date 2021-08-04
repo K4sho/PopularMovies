@@ -1,21 +1,15 @@
 package ru.skillbranch.searchmovie.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import coil.load
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.dto.MovieDto
-import ru.skillbranch.searchmovie.data.repository.MoviesRepository
-import ru.skillbranch.searchmovie.data.sources.movies.MoviesDataSourceImpl
 
 class MovieDetailsFragment : Fragment() {
     private var movieName: String? = null
@@ -128,21 +122,9 @@ class MovieDetailsFragment : Fragment() {
         const val ACTOR_NAME_2 = "actorName2"
         const val ACTOR_NAME_3 = "actorName3"
 
-        fun newInstance(movie: MovieDto) =
+        fun newInstance(bundle: Bundle) =
             MovieDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(MOVIE_NAME, movie.title)
-                    putString(MOVIE_DESCRIPTION, movie.description)
-                    putInt(MOVIE_RATE_SCORE, movie.rateScore)
-                    putInt(MOVIE_AGE, movie.ageLimit)
-                    putString(MOVIE_IMAGE_URL, movie.imageUrl)
-                    putString(ACTOR_IMAGE_URL_1, movie.actors[0].imageUrl)
-                    putString(ACTOR_IMAGE_URL_2, movie.actors[1].imageUrl)
-                    putString(ACTOR_IMAGE_URL_3, movie.actors[2].imageUrl)
-                    putString(ACTOR_NAME_1, movie.actors[0].name)
-                    putString(ACTOR_NAME_2, movie.actors[1].name)
-                    putString(ACTOR_NAME_3, movie.actors[2].name)
-                }
+                arguments = bundle
             }
     }
 }
