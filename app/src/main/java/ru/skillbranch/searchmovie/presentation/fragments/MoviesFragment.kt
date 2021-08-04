@@ -54,6 +54,8 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
+        viewModel.moviesList.observe(requireActivity(), moviesObserver)
+        viewModel.categoriesList.observe(requireActivity(), categoriesObserver)
     }
 
     override fun onCreateView(
@@ -67,8 +69,6 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pullToRefreshLayout = view.findViewById(R.id.movies_refresh_layout)
-        viewModel.moviesList.observe(requireActivity(), moviesObserver)
-        viewModel.categoriesList.observe(requireActivity(), categoriesObserver)
         pullToRefreshLayout.setOnRefreshListener {
             viewModel.handleRefreshMovies()
             pullToRefreshLayout.isRefreshing = false
