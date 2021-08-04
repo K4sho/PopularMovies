@@ -1,6 +1,7 @@
 package ru.skillbranch.searchmovie.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlinx.coroutines.*
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.data.repository.CategoriesRepository
@@ -30,8 +33,17 @@ import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.Categ
 class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private lateinit var categoriesRecyclerView: RecyclerView
     private lateinit var moviesRecyclerView: RecyclerView
+    private lateinit var pullToRefreshLayout: SwipeRefreshLayout
     private val moviesRepository = MoviesRepository(MoviesDataSourceImpl())
     private val categoriesRepository = CategoriesRepository(CategoriesDataSourceImpl())
+    private val categoriesAdapter =
+        CategoriesRecyclerAdapter(this, categoriesRepository.getCategories())
+    private val moviesAdapter = MoviesRecyclerAdapter(this, moviesRepository.getMovies())
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        val movieList: List<MovieDto> = emptyList()
+        moviesAdapter.setData(movieList)
+        Log.d("CoroutineException", "Нет фильмов для отображения $exception")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +55,11 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pullToRefreshLayout = view.findViewById(R.id.movies_refresh_layout)
+        pullToRefreshLayout.setOnRefreshListener {
+            setDataForMovieAdapter()
+            pullToRefreshLayout.isRefreshing = false
+        }
         initRecyclersGenreAndMovies(view)
     }
 
@@ -51,8 +68,6 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         moviesRecyclerView = view.findViewById(R.id.rv_movies)
 
         // Прокидываем адаптеры
-        val categoriesAdapter = CategoriesRecyclerAdapter(this, categoriesRepository.getCategories())
-        val moviesAdapter = MoviesRecyclerAdapter(this, moviesRepository.getMovies())
         categoriesRecyclerView.adapter = categoriesAdapter
         moviesRecyclerView.adapter = moviesAdapter
 
@@ -63,28 +78,36 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         val itemWidth = resources.getDimension(R.dimen.item_movie_width).toInt()
         val itemMargin = resources.getDimension(R.dimen.item_movie_end_margin).toInt()
         val moviesRecyclerViewItemWidth = itemWidth + itemMargin
-        val moviesRecyclerViewColumnsCount: Int = resources.displayMetrics.widthPixels / moviesRecyclerViewItemWidth
-        moviesRecyclerView.layoutManager = GridLayoutManager(requireContext(), moviesRecyclerViewColumnsCount)
+        val moviesRecyclerViewColumnsCount: Int =
+            resources.displayMetrics.widthPixels / moviesRecyclerViewItemWidth
+        moviesRecyclerView.layoutManager =
+            GridLayoutManager(requireContext(), moviesRecyclerViewColumnsCount)
 
         // Накидываем декораторы
         val rightSpace = resources.getDimension(R.dimen.item_movie_category_end_margin).toInt()
         val rightSpaceItemDecoration = RightSpaceItemDecoration(rightSpace)
         categoriesRecyclerView.addItemDecoration(rightSpaceItemDecoration)
 
-        val itemDecoration = ItemMovieOffsetDecoration(moviesRecyclerViewColumnsCount,
-            this?.resources?.getDimensionPixelSize(R.dimen.item_movie_width) ?: 150)
+        val itemDecoration = ItemMovieOffsetDecoration(
+            moviesRecyclerViewColumnsCount,
+            this?.resources?.getDimensionPixelSize(R.dimen.item_movie_width) ?: 150
+        )
         val bottomSpace = resources.getDimension(R.dimen.item_movie_bottom_margin).toInt()
         val bottomSpaceItemDecoration = BottomSpaceItemDecoration(bottomSpace)
         moviesRecyclerView.addItemDecoration(itemDecoration)
         moviesRecyclerView.addItemDecoration(bottomSpaceItemDecoration)
 
         // DiffUtil
-        val categoriesCallback = CategoriesCallback(categoriesRepository.getCategories(), categoriesRepository.getCategories())
+        val categoriesCallback = CategoriesCallback(
+            categoriesRepository.getCategories(),
+            categoriesRepository.getCategories()
+        )
         val categoriesDiff = DiffUtil.calculateDiff(categoriesCallback)
         categoriesDiff.dispatchUpdatesTo(categoriesRecyclerView.adapter as RecyclerView.Adapter<CategoriesViewHolder>)
-        val categories = categoriesRepository.getCategories()
+        categoriesRepository.getCategories()
 
-        val moviesCallback = MoviesCallback(moviesRepository.getMovies(), moviesRepository.getMovies())
+        val moviesCallback =
+            MoviesCallback(moviesRepository.getMovies(), moviesRepository.getMovies())
         val moviesDiff = DiffUtil.calculateDiff(moviesCallback)
         moviesDiff.dispatchUpdatesTo(moviesRecyclerView.adapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
     }
@@ -98,10 +121,22 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         Toast.makeText(requireContext(), genreName, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onMovieClick(position: Int) {
+    override fun onMovieClick(movie: MovieDto) {
         parentFragmentManager.beginTransaction().replace(
             R.id.main_fragment_container,
-            MovieDetailsFragment.newInstance(position)).addToBackStack(null).commit()
+            MovieDetailsFragment.newInstance(movie)
+        ).addToBackStack(null).commit()
     }
 
+    private fun setDataForMovieAdapter() = runBlocking {
+        setData()
+    }
+
+    private suspend fun setData() = coroutineScope {
+        val download: Job = launch(coroutineExceptionHandler) {
+            val movieList: List<MovieDto> = moviesRepository.getRefreshMovies()
+            moviesAdapter.setData(movieList)
+        }
+        download.join()
+    }
 }

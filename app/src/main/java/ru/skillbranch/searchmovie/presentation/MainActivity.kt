@@ -20,8 +20,10 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             startFragment = MoviesFragment.newInstance()
             startFragment?.apply {
-                supportFragmentManager.beginTransaction().add(R.id.main_fragment_container,
-                    this, INITIAL_FRAGMENT_TAG).commit()
+                supportFragmentManager.beginTransaction().add(
+                    R.id.main_fragment_container,
+                    this, INITIAL_FRAGMENT_TAG
+                ).commit()
             }
         } else {
             startFragment = supportFragmentManager.findFragmentByTag(INITIAL_FRAGMENT_TAG)
@@ -48,8 +50,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.main_fragment_container, fragment).
-            commit()
+            replace(R.id.main_fragment_container, fragment).commit()
         }
     }
 
