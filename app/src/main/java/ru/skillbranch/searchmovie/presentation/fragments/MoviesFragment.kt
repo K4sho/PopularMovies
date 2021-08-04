@@ -37,7 +37,7 @@ import ru.skillbranch.searchmovie.presentation.view_models.MoviesViewModel
 class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private lateinit var categoriesRecyclerView: RecyclerView
     private lateinit var moviesRecyclerView: RecyclerView
-    private lateinit var pullToRefreshLayout: SwipeRefreshLayout
+    private var pullToRefreshLayout: SwipeRefreshLayout? = null
     private lateinit var viewModel: MoviesViewModel
     private val categoriesAdapter =
         CategoriesRecyclerAdapter(this)
@@ -45,6 +45,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
 
     private val moviesObserver = Observer { items: List<MovieDto> ->
         moviesAdapter.setData(items)
+        pullToRefreshLayout?.isRefreshing = false
     }
 
     private val categoriesObserver = Observer { items: List<CategoryDto> ->
@@ -69,9 +70,8 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pullToRefreshLayout = view.findViewById(R.id.movies_refresh_layout)
-        pullToRefreshLayout.setOnRefreshListener {
+        pullToRefreshLayout?.setOnRefreshListener {
             viewModel.handleRefreshMovies()
-            pullToRefreshLayout.isRefreshing = false
         }
         initRecyclersGenreAndMovies(view)
     }
