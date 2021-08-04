@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.dto.CategoryDto
+import ru.skillbranch.searchmovie.presentation.fragments.listeners.CategoriesListener
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.CategoriesViewHolder
 
-class CategoriesRecyclerAdapter(private val callbackFunction: (title: String) -> Unit) :
+class CategoriesRecyclerAdapter(private val listener: CategoriesListener, private var categories: List<CategoryDto>) :
     RecyclerView.Adapter<CategoriesViewHolder>() {
-    lateinit var categories: List<CategoryDto>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesViewHolder {
         val itemView =
@@ -19,7 +19,7 @@ class CategoriesRecyclerAdapter(private val callbackFunction: (title: String) ->
     }
 
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
-        holder.bind(categories[position], callbackFunction)
+        holder.bind(categories[position], listener)
     }
 
     override fun getItemCount(): Int {

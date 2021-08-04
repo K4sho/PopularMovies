@@ -2,106 +2,59 @@ package ru.skillbranch.searchmovie.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.dto.CategoryDto
-import ru.skillbranch.searchmovie.data.dto.MovieDto
-import ru.skillbranch.searchmovie.data.sources.categories.CategoriesDataSourceImpl
-import ru.skillbranch.searchmovie.data.sources.movies.MoviesDataSourceImpl
-import ru.skillbranch.searchmovie.presentation.recycler_views.CategoriesCallback
-import ru.skillbranch.searchmovie.presentation.recycler_views.MoviesCallback
-import ru.skillbranch.searchmovie.presentation.recycler_views.adapters.CategoriesRecyclerAdapter
-import ru.skillbranch.searchmovie.presentation.recycler_views.adapters.MoviesRecyclerAdapter
-import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.BottomSpaceItemDecoration
-import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.RightSpaceItemDecoration
-import ru.skillbranch.searchmovie.data.repository.CategoriesRepository
-import ru.skillbranch.searchmovie.data.repository.MoviesRepository
-import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.ItemMovieOffsetDecoration
-import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.CategoriesViewHolder
+import ru.skillbranch.searchmovie.presentation.fragments.MoviesFragment
+import ru.skillbranch.searchmovie.presentation.fragments.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var moviesModel: MoviesRepository
-    private lateinit var categoriesModel: CategoriesRepository
-    private lateinit var categoriesRecyclerView: RecyclerView
-    private lateinit var moviesRecyclerView: RecyclerView
-    private var categories = listOf<CategoryDto>()
-    private var movies = listOf<MovieDto>()
+
+    private var startFragment: Fragment? = null
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_details)
-
-        initDataSource()
-        setupRecyclerViews()
-    }
-
-    private fun setupRecyclerViews() {
-        categoriesRecyclerView = findViewById(R.id.rv_categories)
-        moviesRecyclerView = findViewById(R.id.rv_movies)
-
-        val callbackForToast: (String) -> Unit = { showToast(it) }
-
-        // Прокидываем адаптеры
-        val categoriesAdapter = CategoriesRecyclerAdapter(callbackForToast)
-        val moviesAdapter = MoviesRecyclerAdapter(callbackForToast)
-        categoriesRecyclerView.adapter = categoriesAdapter
-        moviesRecyclerView.adapter = moviesAdapter
-
-        // Настраиваем LayoutManager's
-        categoriesRecyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-        val itemWidth = resources.getDimension(R.dimen.item_movie_width).toInt()
-        val itemMargin = resources.getDimension(R.dimen.item_movie_end_margin).toInt()
-        val moviesRecyclerViewItemWidth = itemWidth + itemMargin
-        val moviesRecyclerViewColumnsCount: Int = resources.displayMetrics.widthPixels / moviesRecyclerViewItemWidth
-        moviesRecyclerView.layoutManager = GridLayoutManager(this, moviesRecyclerViewColumnsCount)
-
-        // Накидываем декораторы
-        val rightSpace = resources.getDimension(R.dimen.item_movie_category_end_margin).toInt()
-        val rightSpaceItemDecoration = RightSpaceItemDecoration(rightSpace)
-        categoriesRecyclerView.addItemDecoration(rightSpaceItemDecoration)
-
-        val itemDecoration = ItemMovieOffsetDecoration(moviesRecyclerViewColumnsCount,
-            this?.resources?.getDimensionPixelSize(R.dimen.item_movie_width) ?: 150)
-        val bottomSpace = resources.getDimension(R.dimen.item_movie_bottom_margin).toInt()
-        val bottomSpaceItemDecoration = BottomSpaceItemDecoration(bottomSpace)
-        moviesRecyclerView.addItemDecoration(itemDecoration)
-        moviesRecyclerView.addItemDecoration(bottomSpaceItemDecoration)
-
-        // DiffUtil
-        val categoriesCallback = CategoriesCallback(categories, categoriesModel.getCategories())
-        val categoriesDiff = DiffUtil.calculateDiff(categoriesCallback)
-        categoriesDiff.dispatchUpdatesTo(categoriesRecyclerView.adapter as RecyclerView.Adapter<CategoriesViewHolder>)
-        val categories = categoriesModel.getCategories()
-        categoriesAdapter.categories = categories
-
-        val moviesCallback = MoviesCallback(movies, moviesModel.getMovies())
-        val moviesDiff = DiffUtil.calculateDiff(moviesCallback)
-        moviesDiff.dispatchUpdatesTo(moviesRecyclerView.adapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
-        movies = moviesModel.getMovies()
-        moviesAdapter.movies = movies
-    }
-
-    private fun showToast(message: String?) {
-        when {
-            message.isNullOrEmpty() -> {
-                showToast(getString(R.string.main_empty_message))
+        setContentView(R.layout.activity_main)
+        if (savedInstanceState == null) {
+            startFragment = MoviesFragment.newInstance()
+            startFragment?.apply {
+                supportFragmentManager.beginTransaction().add(
+                    R.id.main_fragment_container,
+                    this, INITIAL_FRAGMENT_TAG
+                ).commit()
             }
-            else -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        } else {
+            startFragment = supportFragmentManager.findFragmentByTag(INITIAL_FRAGMENT_TAG)
+        }
+
+        bottomNavigationView = findViewById(R.id.bottom_nav_view)
+        bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.bottom_menu_home -> {
+                    loadFragment(MoviesFragment.newInstance())
+                    true
+                }
+                R.id.bottom_menu_profile -> {
+                    loadFragment(ProfileFragment.newInstance())
+                    true
+                }
+                else -> false
+            }
         }
     }
 
-    private fun initDataSource() {
-        moviesModel = MoviesRepository(MoviesDataSourceImpl())
-        categoriesModel = CategoriesRepository(CategoriesDataSourceImpl())
+    private fun loadFragment(fragment: Fragment) {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.main_fragment_container, fragment).commit()
+        }
     }
 
-    private fun updateData() {
-
+    companion object {
+        const val INITIAL_FRAGMENT_TAG = "InitialFragment"
     }
 }
