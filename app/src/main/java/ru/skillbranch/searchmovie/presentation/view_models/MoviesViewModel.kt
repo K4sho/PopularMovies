@@ -1,6 +1,5 @@
 package ru.skillbranch.searchmovie.presentation.view_models
 
-import android.graphics.Movie
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
