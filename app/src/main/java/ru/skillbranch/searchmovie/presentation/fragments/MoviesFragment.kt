@@ -1,7 +1,6 @@
 package ru.skillbranch.searchmovie.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,29 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import kotlinx.coroutines.*
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.dto.CategoryDto
 import ru.skillbranch.searchmovie.data.dto.MovieDto
-import ru.skillbranch.searchmovie.data.repository.CategoriesRepository
-import ru.skillbranch.searchmovie.data.repository.MoviesRepository
-import ru.skillbranch.searchmovie.data.sources.categories.CategoriesDataSourceImpl
-import ru.skillbranch.searchmovie.data.sources.movies.MoviesDataSourceImpl
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.CategoriesListener
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
-import ru.skillbranch.searchmovie.presentation.recycler_views.CategoriesCallback
-import ru.skillbranch.searchmovie.presentation.recycler_views.MoviesCallback
 import ru.skillbranch.searchmovie.presentation.recycler_views.adapters.CategoriesRecyclerAdapter
 import ru.skillbranch.searchmovie.presentation.recycler_views.adapters.MoviesRecyclerAdapter
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.BottomSpaceItemDecoration
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.ItemMovieOffsetDecoration
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.RightSpaceItemDecoration
-import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.CategoriesViewHolder
 import ru.skillbranch.searchmovie.presentation.view_models.MoviesViewModel
 
 class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
