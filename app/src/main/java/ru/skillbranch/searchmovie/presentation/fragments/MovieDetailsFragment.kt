@@ -1,5 +1,6 @@
 package ru.skillbranch.searchmovie.presentation.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,21 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import coil.load
 import ru.skillbranch.searchmovie.R
+import ru.skillbranch.searchmovie.data.dto.MovieDto
+import ru.skillbranch.searchmovie.presentation.view_models.MovieDetailsViewModel
 
 class MovieDetailsFragment : Fragment() {
-    private var movieName: String? = null
-    private var movieDescription: String? = null
-    private var movieStarNumber: Int? = null
-    private var movieAge: Int? = null
-    private var movieImageUrl: String? = null
-    private var actorImageUrl1: String? = null
-    private var actorImageUrl2: String? = null
-    private var actorImageUrl3: String? = null
-    private var actorName1: String? = null
-    private var actorName2: String? = null
-    private var actorName3: String? = null
+    private var movieId: Int? = null
 
     private lateinit var moviePoster: ImageView
     private lateinit var firstActorImage: ImageView
@@ -35,27 +29,16 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var secondActorNameTextView: TextView
     private lateinit var thirdActorNameTextView: TextView
 
+    private lateinit var movie: MovieDto
+    private lateinit var viewModel: MovieDetailsViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            movieName = it.getString(MOVIE_NAME)
-            movieDescription = it.getString(MOVIE_DESCRIPTION)
-            movieStarNumber = it.getInt(MOVIE_RATE_SCORE)
-            movieAge = it.getInt(MOVIE_AGE)
-            movieImageUrl = it.getString(MOVIE_IMAGE_URL)
-            actorImageUrl1 = it.getString(
-                ACTOR_IMAGE_URL_1
-            )
-            actorImageUrl2 = it.getString(
-                ACTOR_IMAGE_URL_2
-            )
-            actorImageUrl3 = it.getString(
-                ACTOR_IMAGE_URL_3
-            )
-            actorName1 = it.getString(ACTOR_NAME_1)
-            actorName2 = it.getString(ACTOR_NAME_2)
-            actorName3 = it.getString(ACTOR_NAME_3)
+            movieId = it.getInt(MOVIE_ID)
         }
+        viewModel = ViewModelProvider(requireActivity()).get(MovieDetailsViewModel::class.java)
+        movie = viewModel.getMoviesById(movieId!!)!!
     }
 
     override fun onCreateView(
@@ -66,6 +49,7 @@ class MovieDetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         moviePoster = view.findViewById(R.id.iv_banner)
@@ -79,16 +63,16 @@ class MovieDetailsFragment : Fragment() {
         secondActorNameTextView = view.findViewById(R.id.tv_actor_2)
         thirdActorNameTextView = view.findViewById(R.id.tv_actor_3)
 
-        moviePoster.load(movieImageUrl)
-        firstActorImage.load(actorImageUrl1)
-        secondActorImage.load(actorImageUrl2)
-        thirdActorImage.load(actorImageUrl3)
-        firstActorNameTextView.text = actorName1
-        secondActorNameTextView.text = actorName2
-        thirdActorNameTextView.text = actorName3
-        movieNameTextView.text = movieName
-        movieDescriptionTextView.text = movieDescription
-        movieAgeTextView.text = movieAge.toString() + "+"
+        moviePoster.load(movie.imageUrl)
+        firstActorImage.load(movie.actors[0].imageUrl)
+        secondActorImage.load(movie.actors[1].imageUrl)
+        thirdActorImage.load(movie.actors[2].imageUrl)
+        firstActorNameTextView.text = movie.actors[0].name
+        secondActorNameTextView.text = movie.actors[1].name
+        thirdActorNameTextView.text = movie.actors[2].name
+        movieNameTextView.text = movie.title
+        movieDescriptionTextView.text = movie.description
+        movieAgeTextView.text = movie.ageLimit.toString() + "+"
         val iconStar = ResourcesCompat.getDrawable(
             view.context.resources,
             R.drawable.ic_star_selected,
@@ -101,7 +85,7 @@ class MovieDetailsFragment : Fragment() {
             view.findViewById(R.id.rating_star_4),
             view.findViewById(R.id.rating_star_5)
         )
-        val maxScore = movieStarNumber ?: MAX_RATE_SCORE
+        val maxScore = movie.rateScore ?: MAX_RATE_SCORE
         for (i in 0 until maxScore) {
             starImagesRating[i].setImageDrawable(iconStar)
         }
@@ -109,18 +93,8 @@ class MovieDetailsFragment : Fragment() {
 
     companion object {
 
+        const val MOVIE_ID = "movieId"
         const val MAX_RATE_SCORE = 5
-        const val MOVIE_NAME = "movieName"
-        const val MOVIE_DESCRIPTION = "movieDescription"
-        const val MOVIE_RATE_SCORE = "movieStarNumber"
-        const val MOVIE_AGE = "movieAge"
-        const val MOVIE_IMAGE_URL = "movieImageUrl"
-        const val ACTOR_IMAGE_URL_1 = "actorImageURl1"
-        const val ACTOR_IMAGE_URL_2 = "actorImageURl2"
-        const val ACTOR_IMAGE_URL_3 = "actorImageURl3"
-        const val ACTOR_NAME_1 = "actorName1"
-        const val ACTOR_NAME_2 = "actorName2"
-        const val ACTOR_NAME_3 = "actorName3"
 
         fun newInstance(bundle: Bundle) =
             MovieDetailsFragment().apply {
