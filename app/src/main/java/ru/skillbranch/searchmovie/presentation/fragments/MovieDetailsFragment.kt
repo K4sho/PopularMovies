@@ -16,7 +16,7 @@ import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.view_models.MovieDetailsViewModel
 
 class MovieDetailsFragment : Fragment() {
-    private var movieId: Int? = null
+    private var movieId: Int = 0
 
     private lateinit var moviePoster: ImageView
     private lateinit var firstActorImage: ImageView
@@ -38,7 +38,7 @@ class MovieDetailsFragment : Fragment() {
             movieId = it.getInt(MOVIE_ID)
         }
         viewModel = ViewModelProvider(requireActivity()).get(MovieDetailsViewModel::class.java)
-        movie = viewModel.getMoviesById(movieId!!)!!
+        movie = viewModel.getMoviesById(movieId) ?: viewModel.getMovies()[0]
     }
 
     override fun onCreateView(
