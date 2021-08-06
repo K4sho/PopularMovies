@@ -38,7 +38,8 @@ class MovieDetailsFragment : Fragment() {
             movieId = it.getInt(MOVIE_ID)
         }
         viewModel = ViewModelProvider(requireActivity()).get(MovieDetailsViewModel::class.java)
-        movie = viewModel.getMoviesById(movieId) ?: viewModel.getMovies()[0]
+        /// Если фильм по id не был найден, то просто пока что покажем первый фильм лежащий в репеg
+        movie = viewModel.getMoviesById(movieId) ?: viewModel.getMovies().first()
     }
 
     override fun onCreateView(
