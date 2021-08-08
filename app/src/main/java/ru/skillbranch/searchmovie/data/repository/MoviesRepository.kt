@@ -16,4 +16,10 @@ class MoviesRepository(
         movies = movies.shuffled()
         return movies
     }
+
+    fun getMovieById(movieId: Int): MovieDto? {
+        return movies.find { it.id == movieId }
+    }
+
+
 }

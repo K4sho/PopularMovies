@@ -1,20 +1,22 @@
 package ru.skillbranch.searchmovie.presentation.recycler_views.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
+import ru.skillbranch.searchmovie.presentation.recycler_views.MoviesCallback
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.EmptyMoviesListViewHolder
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.MoviesViewHolder
 
 class MoviesRecyclerAdapter(
-    private val listener: MovieClickListener,
-    private var movies: List<MovieDto>
+    private val listener: MovieClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var movies: List<MovieDto> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -43,7 +45,11 @@ class MoviesRecyclerAdapter(
     }
 
     fun setData(newMovies: List<MovieDto>) {
+        val moviesCallback =
+            MoviesCallback(movies, newMovies)
+        val moviesDiff = DiffUtil.calculateDiff(moviesCallback)
         movies = newMovies
+        moviesDiff.dispatchUpdatesTo(this)
         notifyDataSetChanged()
     }
 

@@ -1,6 +1,7 @@
 package ru.skillbranch.searchmovie.data.dto
 
 data class MovieDto(
+    val id: Int,
     val title: String, // Название фильма
     val description: String, // Описание фильма
     val rateScore: Int, // Рэйтинг
