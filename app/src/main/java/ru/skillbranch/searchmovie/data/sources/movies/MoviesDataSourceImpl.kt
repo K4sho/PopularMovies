@@ -7,6 +7,7 @@ import ru.skillbranch.searchmovie.data.dto.MovieDto
 class MoviesDataSourceImpl: IMoviesDataSource {
     override fun getMovies() = listOf(
         MovieDto(
+            id = 1,
             title = "Гнев человеческий",
             description = "Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя...",
             rateScore = 3,
@@ -20,6 +21,7 @@ class MoviesDataSourceImpl: IMoviesDataSource {
                 ActorDto("Джош Харнетт","https://www.themoviedb.org/t/p/w600_and_h900_bestv2/y3UF4biXITMMH8qutq7K7YLjvu5.jpg"))
         ),
         MovieDto(
+            id = 2,
             title = "Мортал Комбат",
             description = "Боец смешанных единоборств Коул Янг не раз соглашался проиграть за деньги. Он не знает о своем наследии...",
             rateScore = 5,
@@ -33,6 +35,7 @@ class MoviesDataSourceImpl: IMoviesDataSource {
                 ActorDto("Josh Lawson","https://www.themoviedb.org/t/p/w600_and_h900_bestv2/Am9vM77uZd9bGODugwmWtOfzx6E.jpg"))
         ),
         MovieDto(
+            id = 3,
             title = "Упс... Приплыли!",
             description = "От Великого потопа зверей спас ковчег. Но спустя полгода скитаний они готовы сбежать с него куда угодно...",
             rateScore = 5,
@@ -46,6 +49,7 @@ class MoviesDataSourceImpl: IMoviesDataSource {
                 ActorDto("Mary Murray","https://www.themoviedb.org/t/p/w600_and_h900_bestv2/1ZRP9IfehCSx5OeBQQDcVPvKYD0.jpg"))
         ),
         MovieDto(
+            id = 4,
             title = "The Box",
             description = "Уличный музыкант знакомится с музыкальным продюсером, и они вдвоём отправляются в путешествие...",
             rateScore = 4,
@@ -59,6 +63,7 @@ class MoviesDataSourceImpl: IMoviesDataSource {
                 ActorDto("Gaeko","https://www.themoviedb.org/t/p/w600_and_h900_bestv2/fDO7vJVRkZOOY1GtQMJzf4N136q.jpg"))
         ),
         MovieDto(
+            id = 5,
             title = "Сага о Дэнни Эрнандесе",
             description = "Tekashi69 или Сикснайн — знаменитый бруклинский рэпер с радужными волосами — прогремел...",
             rateScore = 2,
@@ -72,6 +77,7 @@ class MoviesDataSourceImpl: IMoviesDataSource {
                 ActorDto("Gaeko","https://www.themoviedb.org/t/p/w600_and_h900_bestv2/fDO7vJVRkZOOY1GtQMJzf4N136q.jpg"))
         ),
         MovieDto(
+            id = 6,
             title = "Пчелка Майя",
             description = "Когда упрямая пчелка Майя и ее лучший друг Вилли спасают принцессу-муравьишку, начинается сказочное...",
             rateScore = 4,
@@ -85,6 +91,7 @@ class MoviesDataSourceImpl: IMoviesDataSource {
                 ActorDto("Christian Charisiou","https://www.themoviedb.org/t/p/w600_and_h900_bestv2/8OpoYvO1QqBYRAp1LxxUIiRdQG0.jpg"))
         ),
         MovieDto(
+            id = 7,
             title = "Круэлла",
             description = "Невероятно одаренная мошенница по имени Эстелла решает сделать себе имя в мире моды.",
             rateScore = 4,
@@ -98,6 +105,7 @@ class MoviesDataSourceImpl: IMoviesDataSource {
                 ActorDto("Joel Fry","https://www.themoviedb.org/t/p/w600_and_h900_bestv2/4nEKEWJpaTHncCTv6zeP98V0qGI.jpg"))
         ),
         MovieDto(
+            id = 8,
             title = "Чёрная вдова",
             description = "Чёрной Вдове придется вспомнить о том, что было в её жизни задолго до присоединения к команде Мстителей",
             rateScore = 3,
