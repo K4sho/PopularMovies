@@ -20,6 +20,4 @@ class MoviesRepository(
     fun getMovieById(movieId: Int): MovieDto? {
         return movies.find { it.id == movieId }
     }
-
-
 }
