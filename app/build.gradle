@@ -47,23 +47,33 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
 
-    implementation "io.coil-kt:coil-base:$coil_version"
-    implementation "io.coil-kt:coil:$coil_version"
-
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.fragment:fragment-ktx:1.4.0-alpha06'
 
+    // Tests
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     testImplementation 'junit:junit:4.13.2'
 
-    implementation 'androidx.fragment:fragment-ktx:1.4.0-alpha06'
-
+    // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.4.0-alpha06"
     implementation "androidx.navigation:navigation-ui-ktx:2.4.0-alpha06"
-    
+
+    // Coil
+    implementation "io.coil-kt:coil-base:$coil_version"
+    implementation "io.coil-kt:coil:$coil_version"
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-analytics'
+
+    // Room
+    implementation "androidx.room:room-runtime:2.3.0"
+    implementation "androidx.room:room-ktx:2.3.0"
+    kapt "androidx.room:room-compiler:2.3.0"
+    testImplementation "androidx.room:room-testing:2.3.0"
+
+    // Encrypted Shared Preferences
+    implementation "androidx.security:security-crypto:1.1.0-alpha03"
 }
