@@ -1,19 +1,21 @@
-package ru.skillbranch.searchmovie.data.local
+package ru.skillbranch.searchmovie.data.database
 
 import androidx.lifecycle.MutableLiveData
 import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKeys
 import ru.skillbranch.searchmovie.App
 
 object PrefManager {
-    private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
-    private val mainKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+    private val masterKey = MasterKey.Builder(App.applicationContext())
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
     private const val sharedPrefsFile: String = "movies_db_pref_file"
 
-    internal val preferences = EncryptedSharedPreferences.create(
-        sharedPrefsFile,
-        mainKeyAlias,
+    val preferences = EncryptedSharedPreferences.create(
         App.applicationContext(),
+        sharedPrefsFile,
+        masterKey,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )

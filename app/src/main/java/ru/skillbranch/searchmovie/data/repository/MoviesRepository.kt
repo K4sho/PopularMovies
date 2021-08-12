@@ -1,15 +1,18 @@
 package ru.skillbranch.searchmovie.data.repository
 
 import kotlinx.coroutines.delay
+import ru.skillbranch.searchmovie.App
+import ru.skillbranch.searchmovie.data.database.MovieDatabase
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.data.sources.movies.IMoviesDataSource
 
 class MoviesRepository(
     private val moviesDataSource: IMoviesDataSource
 ) {
+    private val movieDao = MovieDatabase.getInstance(App.applicationContext()).movieAppDao
     private var movies = moviesDataSource.getMovies()
 
-    fun getMovies() = movies
+    suspend fun getMovies() = movieDao.getMoviesWithActors()
 
     suspend fun getRefreshMovies(): List<MovieDto> {
         delay(2000)

@@ -19,6 +19,7 @@ class MovieDetailsFragment : Fragment() {
     private var movieId: Int = 0
 
     private lateinit var moviePoster: ImageView
+    private lateinit var movieGenre: TextView
     private lateinit var firstActorImage: ImageView
     private lateinit var secondActorImage: ImageView
     private lateinit var thirdActorImage: ImageView
@@ -54,6 +55,7 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         moviePoster = view.findViewById(R.id.iv_banner)
+        movieGenre = view.findViewById(R.id.tv_genre)
         movieNameTextView = view.findViewById(R.id.tv_movie_title)
         movieDescriptionTextView = view.findViewById(R.id.tv_description_movie)
         movieAgeTextView = view.findViewById(R.id.tv_age_limit)
@@ -65,6 +67,7 @@ class MovieDetailsFragment : Fragment() {
         thirdActorNameTextView = view.findViewById(R.id.tv_actor_3)
 
         moviePoster.load(movie.imageUrl)
+        movieGenre.text = movie.genre.name
         firstActorImage.load(movie.actors[0].imageUrl)
         secondActorImage.load(movie.actors[1].imageUrl)
         thirdActorImage.load(movie.actors[2].imageUrl)

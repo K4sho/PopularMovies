@@ -1,13 +1,16 @@
-package ru.skillbranch.searchmovie.data.local.entities
+package ru.skillbranch.searchmovie.data.database.entities
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ru.skillbranch.searchmovie.data.dto.ActorDto
+import ru.skillbranch.searchmovie.data.dto.CategoryDto
 
 @Entity(tableName = "Movies")
 data class Movie (
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "movie_id")
     val movieId: Int,
     @ColumnInfo(name = "title")
     val title: String,
@@ -19,10 +22,8 @@ data class Movie (
     val ageLimit: Int,
     @ColumnInfo(name = "image_url")
     val imageUrl: String,
-    @ColumnInfo(name = "genre_id")
-    val genre: Int,
+    @Embedded
+    val genre: CategoryDto,
     @ColumnInfo(name = "release_date")
     val releaseDate: String,
-    @ColumnInfo(name = "actor_id")
-    val actor: Int
 )

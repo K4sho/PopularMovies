@@ -1,8 +1,8 @@
-package ru.skillbranch.searchmovie.data.local.dao
+package ru.skillbranch.searchmovie.data.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import ru.skillbranch.searchmovie.data.local.entities.Profile
+import ru.skillbranch.searchmovie.data.database.entities.Profile
 
 @Dao
 interface ProfileDao {

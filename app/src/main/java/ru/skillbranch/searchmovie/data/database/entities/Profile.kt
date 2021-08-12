@@ -1,4 +1,4 @@
-package ru.skillbranch.searchmovie.data.local.entities
+package ru.skillbranch.searchmovie.data.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -17,4 +17,6 @@ data class Profile(
     var email: String?,
     @ColumnInfo(name = "phone")
     var phone: String?,
+    @ColumnInfo(name = "interests")
+    var interests: List<String> = listOf()
 )
