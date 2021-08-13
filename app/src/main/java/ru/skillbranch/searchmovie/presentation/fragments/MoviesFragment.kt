@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.skillbranch.searchmovie.R
+import ru.skillbranch.searchmovie.data.database.entities.Movie
 import ru.skillbranch.searchmovie.data.dto.CategoryDto
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.CategoriesListener
@@ -36,7 +37,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private val moviesAdapter = MoviesRecyclerAdapter(this)
     private lateinit var navController: NavController
 
-    private val moviesObserver = Observer { items: List<MovieDto> ->
+    private val moviesObserver = Observer { items: List<Movie> ->
         moviesAdapter.setData(items)
         pullToRefreshLayout?.isRefreshing = false
     }

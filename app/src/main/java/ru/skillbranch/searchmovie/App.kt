@@ -5,10 +5,12 @@ import android.content.Context
 import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import ru.skillbranch.searchmovie.data.database.MovieDatabase
 
 class App : Application() {
 
     companion object {
+        lateinit var database: MovieDatabase
         private var instance: App? = null
 
         fun applicationContext(): Context {
@@ -22,6 +24,9 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        Log.d("TAGSS", "CREATE DATABASE")
+        database = MovieDatabase.getInstance(this)
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {

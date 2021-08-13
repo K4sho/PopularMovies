@@ -1,19 +1,28 @@
 package ru.skillbranch.searchmovie.presentation.view_models
 
-import android.graphics.Movie
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.skillbranch.searchmovie.data.dto.MovieDto
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ru.skillbranch.searchmovie.data.database.entities.Movie
+import ru.skillbranch.searchmovie.data.database.entities.MoviesWithActors
+import ru.skillbranch.searchmovie.data.dto.CategoryDto
 import ru.skillbranch.searchmovie.data.repository.MoviesRepository
-import ru.skillbranch.searchmovie.data.sources.movies.MoviesDataSourceImpl
 
-class MovieDetailsViewModel : ViewModel() {
-    private val moviesRepository: MoviesRepository = MoviesRepository(MoviesDataSourceImpl())
+class MovieDetailsViewModel() : ViewModel() {
+    private val moviesRepository = MoviesRepository()
 
-    fun getMoviesById(movieId: Int): MovieDto? {
-        return moviesRepository.getMovieById(movieId)
-    }
-
-    fun getMovies(): List<MovieDto> {
-        return moviesRepository.getMovies()
+    fun getMovieByIdWithActors(movieId: Int) : LiveData<MoviesWithActors> {
+        val result = MutableLiveData<MoviesWithActors>()
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                result.postValue(moviesRepository.getMovieWitchActors(movieId))
+            }
+        }
+        return result
     }
 }

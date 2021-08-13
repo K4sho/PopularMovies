@@ -9,7 +9,7 @@ import ru.skillbranch.searchmovie.data.dto.CategoryDto
 
 @Entity(tableName = "Movies")
 data class Movie (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "movie_id")
     val movieId: Int,
     @ColumnInfo(name = "title")

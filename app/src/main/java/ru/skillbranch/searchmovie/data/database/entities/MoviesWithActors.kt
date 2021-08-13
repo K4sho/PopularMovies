@@ -3,7 +3,7 @@ package ru.skillbranch.searchmovie.data.database.entities
 import androidx.room.*
 
 @Entity(tableName = "MoviesAndActors")
-data class MoviesAndActors(
+data class MoviesWithActors(
     @Embedded
     val movie: Movie,
     @Relation(
@@ -11,5 +11,5 @@ data class MoviesAndActors(
         entityColumn = "actor_id",
         associateBy = Junction(MovieActorCrossRef::class)
     )
-    var actorsList: List<Actor>
+    val actorsList: List<Actor>
 )

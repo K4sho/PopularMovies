@@ -1,26 +1,28 @@
 package ru.skillbranch.searchmovie.data.repository
 
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import ru.skillbranch.searchmovie.App
-import ru.skillbranch.searchmovie.data.database.MovieDatabase
-import ru.skillbranch.searchmovie.data.dto.MovieDto
-import ru.skillbranch.searchmovie.data.sources.movies.IMoviesDataSource
+import ru.skillbranch.searchmovie.data.database.entities.Movie
+import ru.skillbranch.searchmovie.data.database.entities.MoviesWithActors
 
-class MoviesRepository(
-    private val moviesDataSource: IMoviesDataSource
-) {
-    private val movieDao = MovieDatabase.getInstance(App.applicationContext()).movieAppDao
-    private var movies = moviesDataSource.getMovies()
+class MoviesRepository {
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        println("CoroutineExceptionHandler got $exception")
+    }
+    // SupervisorJob() нужен для того, что бы при краше дочерней корутины не закрывались все остальные
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO + handler)
+    private val movieDao = App.database.movieAppDao
 
-    suspend fun getMovies() = movieDao.getMoviesWithActors()
+    suspend fun getMovies() = movieDao.getAllMovies()
 
-    suspend fun getRefreshMovies(): List<MovieDto> {
+    suspend fun getRefreshMovies(): List<Movie> {
         delay(2000)
-        movies = movies.shuffled()
-        return movies
+        return movieDao.getAllMovies().shuffled()
     }
 
-    fun getMovieById(movieId: Int): MovieDto? {
-        return movies.find { it.id == movieId }
+    suspend fun getMovieWitchActors(movieId: Int): MoviesWithActors {
+        return movieDao.getMoviesWithActors().filter { it.movie.movieId == movieId }.first()
     }
+
+    suspend fun getMovieById(movieId: Int) = movieDao.getAllMovies().find { it.movieId == movieId }
 }
