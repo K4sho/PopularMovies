@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.database.entities.Movie
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
 
@@ -28,8 +27,8 @@ class MoviesViewHolder(itemView: View, private val movieClickListener: MovieClic
     private val movieAgeRatingTextView: TextView =
         itemView.findViewById(R.id.tv_item_movie_age_limit)
 
-    fun bind(movie: Movie) {
-        itemView.setOnClickListener { movieClickListener.onMovieClick(movie.movieId) }
+    fun bind(movie: MovieDto) {
+        itemView.setOnClickListener { movieClickListener.onMovieClick(movie.id) }
         movieCoverImageView.load(movie.imageUrl)
         movieTitleTextView.text = movie.title
         movieDescriptionTextView.text = movie.description

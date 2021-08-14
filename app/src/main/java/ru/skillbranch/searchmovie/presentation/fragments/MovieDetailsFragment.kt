@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.database.entities.MoviesWithActors
+import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.view_models.MovieDetailsViewModel
 
 class MovieDetailsFragment : Fragment() {
@@ -27,6 +27,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var movieNameTextView: TextView
     private lateinit var movieDescriptionTextView: TextView
     private lateinit var movieAgeTextView: TextView
+    private lateinit var movieReleaseDate: TextView
     private lateinit var firstActorNameTextView: TextView
     private lateinit var secondActorNameTextView: TextView
     private lateinit var thirdActorNameTextView: TextView
@@ -34,8 +35,7 @@ class MovieDetailsFragment : Fragment() {
 
     private lateinit var viewModel: MovieDetailsViewModel
 
-    private val moviesInfoObserver = Observer { item: MoviesWithActors ->
-        val movie: MoviesWithActors = item
+    private val moviesInfoObserver = Observer { movie: MovieDto ->
         moviePoster = fragmentView.findViewById(R.id.iv_banner)
         movieGenre = fragmentView.findViewById(R.id.tv_genre)
         movieNameTextView = fragmentView.findViewById(R.id.tv_movie_title)
@@ -47,18 +47,20 @@ class MovieDetailsFragment : Fragment() {
         firstActorNameTextView = fragmentView.findViewById(R.id.tv_actor_1)
         secondActorNameTextView = fragmentView.findViewById(R.id.tv_actor_2)
         thirdActorNameTextView = fragmentView.findViewById(R.id.tv_actor_3)
+        movieReleaseDate = fragmentView.findViewById(R.id.tv_date_movie)
 
-        moviePoster.load(movie.movie.imageUrl)
-        movieGenre.text = movie.movie.genre.name
-        firstActorImage.load(movie.actorsList[0].photo)
-        secondActorImage.load(movie.actorsList[1].photo)
-        thirdActorImage.load(movie.actorsList[2].photo)
-        firstActorNameTextView.text = movie.actorsList[0].actorName
-        secondActorNameTextView.text = movie.actorsList[1].actorName
-        thirdActorNameTextView.text = movie.actorsList[2].actorName
-        movieNameTextView.text = movie.movie.title
-        movieDescriptionTextView.text = movie.movie.description
-        movieAgeTextView.text = movie.movie.ageLimit.toString() + "+"
+        moviePoster.load(movie.imageUrl)
+        movieGenre.text = movie.genre.name
+        firstActorImage.load(movie.actors[0].imageUrl)
+        secondActorImage.load(movie.actors[1].imageUrl)
+        thirdActorImage.load(movie.actors[2].imageUrl)
+        firstActorNameTextView.text = movie.actors[0].name
+        secondActorNameTextView.text = movie.actors[1].name
+        thirdActorNameTextView.text = movie.actors[2].name
+        movieNameTextView.text = movie.title
+        movieDescriptionTextView.text = movie.description
+        movieReleaseDate.text = movie.releaseDate
+        movieAgeTextView.text = movie.ageLimit.toString() + "+"
         val iconStar = ResourcesCompat.getDrawable(
             fragmentView.context.resources,
             R.drawable.ic_star_selected,
@@ -71,7 +73,7 @@ class MovieDetailsFragment : Fragment() {
             fragmentView.findViewById(R.id.rating_star_4),
             fragmentView.findViewById(R.id.rating_star_5)
         )
-        val maxScore = movie.movie.rateScore ?: MAX_RATE_SCORE
+        val maxScore = movie.rateScore ?: MAX_RATE_SCORE
         for (i in 0 until maxScore) {
             starImagesRating[i].setImageDrawable(iconStar)
         }

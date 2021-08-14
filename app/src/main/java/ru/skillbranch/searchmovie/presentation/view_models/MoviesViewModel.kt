@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
-import ru.skillbranch.searchmovie.data.database.entities.Movie
 import ru.skillbranch.searchmovie.data.dto.CategoryDto
+import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.data.repository.CategoriesRepository
 import ru.skillbranch.searchmovie.data.repository.MoviesRepository
 import ru.skillbranch.searchmovie.data.sources.categories.CategoriesDataSourceImpl
@@ -17,9 +17,9 @@ class MoviesViewModel : ViewModel() {
     private val categoriesRepository: CategoriesRepository =
         CategoriesRepository(CategoriesDataSourceImpl())
 
-    val moviesList: LiveData<List<Movie>>
+    val moviesList: LiveData<List<MovieDto>>
         get() = _moviesList
-    private val _moviesList = MutableLiveData<List<Movie>>()
+    private val _moviesList = MutableLiveData<List<MovieDto>>()
 
     val categoriesList: LiveData<List<CategoryDto>>
         get() = _categoriesList
@@ -49,8 +49,8 @@ class MoviesViewModel : ViewModel() {
         return categoriesRepository.getCategories()
     }
 
-    fun getMovies(): LiveData<List<Movie>> {
-        val result = MutableLiveData<List<Movie>>()
+    fun getMovies(): LiveData<List<MovieDto>> {
+        val result = MutableLiveData<List<MovieDto>>()
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             result.postValue(moviesRepository.getMovies())
         }

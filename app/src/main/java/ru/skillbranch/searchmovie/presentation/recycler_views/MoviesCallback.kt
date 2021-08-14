@@ -1,10 +1,9 @@
 package ru.skillbranch.searchmovie.presentation.recycler_views
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.skillbranch.searchmovie.data.database.entities.Movie
 import ru.skillbranch.searchmovie.data.dto.MovieDto
 
-class MoviesCallback(private val oldList: List<Movie>, private val newList: List<Movie>) :
+class MoviesCallback(private val oldList: List<MovieDto>, private val newList: List<MovieDto>) :
     DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 
