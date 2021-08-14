@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -38,6 +39,14 @@ class MainActivity : AppCompatActivity() {
                         navController.navigate(R.id.nav_movies_fragment)
                     }
                 }
+            }
+        }
+
+        navController.addOnDestinationChangedListener { controller, destination, args ->
+            if (destination.id == R.id.logInFragment) {
+                bottomNavigationView.visibility = View.INVISIBLE
+            } else {
+                bottomNavigationView.visibility = View.VISIBLE
             }
         }
 
@@ -82,4 +91,5 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         unregisterReceiver(pushBroadcastReceiver)
     }
+
 }

@@ -25,7 +25,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Log.d("TAGSS", "CREATE DATABASE")
         database = MovieDatabase.getInstance(this)
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
