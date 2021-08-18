@@ -6,11 +6,14 @@ import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import ru.skillbranch.searchmovie.data.database.MovieDatabase
+import ru.skillbranch.searchmovie.data.network.ApiHelper
+import ru.skillbranch.searchmovie.data.network.NetworkService
 
 class App : Application() {
 
     companion object {
         lateinit var database: MovieDatabase
+        lateinit var apiHelper: ApiHelper
         private var instance: App? = null
 
         fun applicationContext(): Context {
@@ -26,6 +29,7 @@ class App : Application() {
         super.onCreate()
 
         database = MovieDatabase.getInstance(this)
+        apiHelper = ApiHelper(NetworkService.getJSONApi())
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
