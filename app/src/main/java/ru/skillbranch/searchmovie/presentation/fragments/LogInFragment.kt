@@ -1,6 +1,7 @@
 package ru.skillbranch.searchmovie.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,17 +46,21 @@ class LogInFragment : Fragment() {
 
         userButton.setOnClickListener {
             userName = userNameEditText.text.toString()
-            if (profileViewModel.getValue(USER_NAME) == "" ||
-                profileViewModel.getValue(USER_NAME) != userName) {
-                profileViewModel.addPairToPrefs(USER_NAME, userName)
-                profileViewModel.addPairToPrefs(USER_PASSWORD, userPasswordEditText.text.toString())
+            if (profileViewModel.getValue(ProfileViewModel.USER_NAME) == "" ||
+                profileViewModel.getValue(ProfileViewModel.USER_NAME) != userName) {
                 userNameEditText.text.clear()
                 userPasswordEditText.text.clear()
+                profileViewModel.clearProfile()
+                profileViewModel.setName(userName)
+                profileViewModel.setPassword(userPasswordEditText.text.toString())
+                userNameEditText.text.clear()
+                userPasswordEditText.text.clear()
+
                 navController.navigate(R.id.action_logInFragment_to_moviesFragment)
             }
-            else if (profileViewModel.getValue(USER_NAME) == userName) {
+            else if (profileViewModel.getValue(ProfileViewModel.USER_NAME) == userName) {
                 if (userPasswordEditText.text.toString() !=
-                    profileViewModel.getValue(USER_PASSWORD)) {
+                    profileViewModel.getValue(ProfileViewModel.USER_PASSWORD)) {
                     Toast.makeText(requireContext(),
                         INVALID_PASSWORD_MESSAGE, Toast.LENGTH_SHORT).show()
                 }
@@ -69,8 +74,6 @@ class LogInFragment : Fragment() {
     }
 
     companion object {
-        const val USER_NAME: String = "userName"
-        const val USER_PASSWORD: String = "userPassword"
         const val INVALID_PASSWORD_MESSAGE: String = "Неверный пароль! Попробуйте ещё раз!"
     }
 }

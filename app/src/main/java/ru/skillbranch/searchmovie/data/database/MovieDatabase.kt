@@ -45,27 +45,9 @@ abstract class MovieDatabase : RoomDatabase() {
                     context.applicationContext,
                     MovieDatabase::class.java,
                     "movie_db.db"
-                ).addCallback(roomCallback).fallbackToDestructiveMigration().build().also {
+                ).fallbackToDestructiveMigration().build().also {
                     instance = it
                 }
-            }
-        }
-
-        private val roomCallback = object : Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-                prepareDatabase(instance!!)
-            }
-        }
-
-        /// Загрузка в базу статических данны
-        /// TODO: Позже будет из API
-        private fun prepareDatabase(db: MovieDatabase) {
-            val movieDao = db.movieAppDao
-            CoroutineScope(Dispatchers.IO).launch {
-                movieDao.insertMovies(MoviesDataSourceDefault().getMovies())
-                movieDao.insertActors(ActorsDataSourceDefault().getActors())
-                movieDao.insertMovieActorCrossRefAll(MoviesDataSourceDefault().getMoviesAndActors())
             }
         }
     }

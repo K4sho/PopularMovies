@@ -3,6 +3,7 @@ package ru.skillbranch.searchmovie.presentation.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +11,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import ru.skillbranch.searchmovie.R
+import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.view_models.MoviesViewModel
+import ru.skillbranch.searchmovie.presentation.view_models.ProfileState
 import ru.skillbranch.searchmovie.presentation.view_models.ProfileViewModel
 
 class ProfileFragment : Fragment() {
@@ -28,6 +32,10 @@ class ProfileFragment : Fragment() {
     private lateinit var navController: NavController
 
     private lateinit var profileViewModel: ProfileViewModel
+    private val profileObserver = Observer { state: ProfileState ->
+        userNameTextView.text = state.name
+        userEmailTextView.text = state.email
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,18 +59,16 @@ class ProfileFragment : Fragment() {
         userEmailEditText = view.findViewById(R.id.et_user_profile_editable_email)
         userPhoneEditText = view.findViewById(R.id.et_user_profile_editable_phone)
         navController = view.findNavController()
-
-        userNameTextView.text = profileViewModel.getValue(USER_NAME)
-        userEmailTextView.text = profileViewModel.getValue(USER_EMAIL)
-        userNameEditText.setText(profileViewModel.getValue(USER_NAME))
-        userPasswordEditText.setText(profileViewModel.getValue(USER_PASSWORD))
-        userEmailEditText.setText(profileViewModel.getValue(USER_EMAIL))
-        userPhoneEditText.setText(profileViewModel.getValue(USER_PHONE))
+        profileViewModel.state.observe(requireActivity(), profileObserver)
+        userNameEditText.setText(profileViewModel.getValue(ProfileViewModel.USER_NAME))
+        userPasswordEditText.setText(profileViewModel.getValue(ProfileViewModel.USER_PASSWORD))
+        userEmailEditText.setText(profileViewModel.getValue(ProfileViewModel.USER_EMAIL))
+        userPhoneEditText.setText(profileViewModel.getValue(ProfileViewModel.USER_PHONE))
 
         userNameEditText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
-                profileViewModel.addPairToPrefs(USER_NAME, s.toString())
+                profileViewModel.setName(s.toString())
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -73,7 +79,7 @@ class ProfileFragment : Fragment() {
         userPasswordEditText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
-                profileViewModel.addPairToPrefs(USER_PASSWORD, s.toString())
+                profileViewModel.setPassword(s.toString())
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -84,7 +90,7 @@ class ProfileFragment : Fragment() {
         userEmailEditText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
-                profileViewModel.addPairToPrefs(USER_EMAIL, s.toString())
+                profileViewModel.setEmail(s.toString())
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -95,7 +101,7 @@ class ProfileFragment : Fragment() {
         userPhoneEditText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {
-                profileViewModel.addPairToPrefs(USER_PHONE, s.toString())
+                profileViewModel.setPhone(s.toString())
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -109,11 +115,6 @@ class ProfileFragment : Fragment() {
     }
 
     companion object {
-        const val USER_NAME: String = "userName"
-        const val USER_PASSWORD: String = "userPassword"
-        const val USER_EMAIL: String = "userEmail"
-        const val USER_PHONE: String = "userPhone"
-
         @JvmStatic
         fun newInstance() = ProfileFragment()
     }
