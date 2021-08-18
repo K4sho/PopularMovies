@@ -12,10 +12,10 @@ interface ApiService {
     suspend fun getMoviesPopular(): Response<MovieRes>
 
     @GET("genre/movie/list?api_key=296e24d37c4504d69452c574ad7ec88d&language=ru-Ru")
-    suspend fun getGenresDBList(): Response<GenreRes>
+    suspend fun getGenresList(): Response<GenreRes>
 
     @GET("movie/{moviesId}/credits?api_key=296e24d37c4504d69452c574ad7ec88d&language=ru-Ru")
-    suspend fun getActorsDBList(
+    suspend fun getActorsList(
         @Path("moviesId")
         moviesId: Int): Response<ActorRes>
 }
