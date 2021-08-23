@@ -3,6 +3,7 @@ package ru.skillbranch.searchmovie.data.network
 import ru.skillbranch.searchmovie.data.remote_res.ActorRes
 import ru.skillbranch.searchmovie.data.remote_res.GenreRes
 import ru.skillbranch.searchmovie.data.remote_res.MovieRes
+import ru.skillbranch.searchmovie.data.remote_res.MoviesListRes
 import java.io.IOException
 
 // Вспомогательная функция. Позволяет вызвать метод запроса в корутине и передать сообщение, которое будет выброшено при ошибке
@@ -29,7 +30,7 @@ class ApiHelper(private val apiService: ApiService) {
         errorMessage = "Get Genres Error"
     )
 
-    private suspend fun fetchMovies(): Result<MovieRes> {
+    private suspend fun fetchMovies(): Result<MoviesListRes> {
         val response = apiService.getMoviesPopular()
         if (response.isSuccessful) {
             return response.body()?.let { Result.Success(it) }!!

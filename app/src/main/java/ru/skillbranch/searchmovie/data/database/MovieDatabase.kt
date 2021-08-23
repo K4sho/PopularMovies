@@ -1,7 +1,6 @@
 package ru.skillbranch.searchmovie.data.database
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -32,8 +31,8 @@ import ru.skillbranch.searchmovie.data.sources.movies.MoviesDataSourceDefault
 )
 @TypeConverters(ListStringConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
-    abstract val movieAppDao: MoviesDao
-    abstract val userDao: ProfileDao
+    abstract fun movieAppDao(): MoviesDao
+    abstract fun userDao(): ProfileDao
 
     companion object {
         @Volatile
@@ -61,12 +60,16 @@ abstract class MovieDatabase : RoomDatabase() {
         /// Загрузка в базу статических данны
         /// TODO: Позже будет из API
         private fun prepareDatabase(db: MovieDatabase) {
-            val movieDao = db.movieAppDao
+            val movieDao = db.movieAppDao()
             CoroutineScope(Dispatchers.IO).launch {
                 movieDao.insertMovies(MoviesDataSourceDefault().getMovies())
                 movieDao.insertActors(ActorsDataSourceDefault().getActors())
                 movieDao.insertMovieActorCrossRefAll(MoviesDataSourceDefault().getMoviesAndActors())
             }
         }
+    }
+
+    suspend fun isEmpty() : Boolean {
+        return  movieAppDao().getCount() == 0
     }
 }

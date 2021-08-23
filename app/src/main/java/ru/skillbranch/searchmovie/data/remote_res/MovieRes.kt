@@ -1,25 +1,22 @@
 package ru.skillbranch.searchmovie.data.remote_res
 
-data class ResultMoviesList(
-    val adult: Boolean,
-    val backdrop_path: String,
-    val genre_ids: List<Int>,
-    val id: Int,
-    val original_language: String,
-    val original_title: String,
-    val overview: String,
-    val popularity: Double,
-    val poster_path: String,
-    val release_date: String,
-    val title: String,
-    val video: Boolean,
-    val vote_average: Double,
-    val vote_count: Int
-)
+import com.google.gson.annotations.SerializedName
 
 data class MovieRes(
-    val page: Int,
-    val results: List<ResultMoviesList>,
-    val total_pages: Int,
-    val total_results: Int
+    @SerializedName("adult") var adult: Boolean?,
+    @SerializedName("backdrop_path")  var backgroundImagePath: String?,
+    @SerializedName("genre_ids")  var genreIds: List<Int>?,
+    @SerializedName("id")  var idMovie: Int,
+    @SerializedName("original_language")  var originalLanguage: String,
+    @SerializedName("original_title")  var originalTitle: String,
+    @SerializedName("overview")  var overview: String?,
+    @SerializedName("poster_path")  var posterImagePath: String?,
+    @SerializedName("release_date")  var releaseDate: String?,
+    @SerializedName("title")  var title: String,
+    @SerializedName("vote_average")  var voteAverage: Double
+)
+
+data class MoviesListRes(
+    @SerializedName("page") var page: Int,
+    @SerializedName("results") var results: List<MovieRes>,
 )

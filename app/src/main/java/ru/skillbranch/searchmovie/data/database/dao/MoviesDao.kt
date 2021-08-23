@@ -41,4 +41,8 @@ interface MoviesDao {
     @Transaction
     @Query("SELECT * FROM Movies")
     suspend fun getMoviesWithActors(): List<MoviesWithActors>
+
+    // Получить кол-во фильмов
+    @Query("SELECT COUNT(movie_id) FROM Movies WHERE movie_id > 0")
+    suspend fun getCount(): Int
 }

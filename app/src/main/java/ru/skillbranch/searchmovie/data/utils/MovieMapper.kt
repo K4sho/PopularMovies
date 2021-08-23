@@ -1,13 +1,16 @@
 package ru.skillbranch.searchmovie.data.utils
 
+import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
 import ru.skillbranch.searchmovie.data.database.entities.Actor
 import ru.skillbranch.searchmovie.data.database.entities.Movie
 import ru.skillbranch.searchmovie.data.database.entities.MoviesWithActors
 import ru.skillbranch.searchmovie.data.dto.ActorDto
 import ru.skillbranch.searchmovie.data.dto.CategoryDto
 import ru.skillbranch.searchmovie.data.dto.MovieDto
+import ru.skillbranch.searchmovie.data.remote_res.ActorRes
+import ru.skillbranch.searchmovie.data.remote_res.CastActorRes
 import ru.skillbranch.searchmovie.data.remote_res.MovieRes
-import ru.skillbranch.searchmovie.data.remote_res.ResultMoviesList
 import kotlin.math.ceil
 
 
@@ -50,15 +53,23 @@ fun MoviesWithActors.toMovie(): MovieDto {
     )
 }
 
-fun ResultMoviesList.toMovieDb(): Movie {
+fun MovieRes.toMovieDb(): Movie {
     return Movie(
-        movieId = this.id,
-        title = this.original_title,
-        description = this.overview,
-        rateScore = ceil(this.vote_average).toInt(),
-        ageLimit = if (this.adult) 18 else 0,
-        imageUrl = this.poster_path, //TODO: Нужно будет как-то конвертнуть,
-        genre = CategoryDto(this.genre_ids.first(), ""),
-        releaseDate = this.release_date
+        movieId = this.idMovie,
+        title = this.originalTitle,
+        description = this.overview ?: "",
+        rateScore = ceil(this.voteAverage).toInt(),
+        ageLimit = if ((this.adult != null) and (this.adult == true)) 18 else 0,
+        imageUrl = this.posterImagePath ?: "", //TODO: Нужно будет как-то конвертнуть,
+        genre = CategoryDto(this.genreIds?.first() ?: 0, ""),
+        releaseDate = this.releaseDate ?: "00.00.0000"
+    )
+}
+
+fun CastActorRes.toActorDb(): Actor {
+    return Actor(
+        actorId = this.idActor.toInt(),
+        actorName = this.nameActor,
+        photo =  this.actorPoster ?: ""
     )
 }
