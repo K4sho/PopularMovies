@@ -7,12 +7,15 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.skillbranch.searchmovie.App
 import ru.skillbranch.searchmovie.R
+import ru.skillbranch.searchmovie.data.repository.RootRepository
 import ru.skillbranch.searchmovie.notifications.PushService
 
 class MainActivity : AppCompatActivity() {
@@ -20,11 +23,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var pushBroadcastReceiver: BroadcastReceiver
+    private val rootRepository = RootRepository(App.database)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.nav_fragment_container)
+
+        rootRepository.fillDefaultData()
 
         bottomNavigationView = findViewById(R.id.bottom_nav_view)
         bottomNavigationView.setupWithNavController(navController)
@@ -38,6 +44,14 @@ class MainActivity : AppCompatActivity() {
                         navController.navigate(R.id.nav_movies_fragment)
                     }
                 }
+            }
+        }
+
+        navController.addOnDestinationChangedListener { controller, destination, args ->
+            if (destination.id == R.id.logInFragment) {
+                bottomNavigationView.visibility = View.INVISIBLE
+            } else {
+                bottomNavigationView.visibility = View.VISIBLE
             }
         }
 
@@ -82,4 +96,5 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         unregisterReceiver(pushBroadcastReceiver)
     }
+
 }

@@ -11,10 +11,9 @@ import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.data.repository.CategoriesRepository
 import ru.skillbranch.searchmovie.data.repository.MoviesRepository
 import ru.skillbranch.searchmovie.data.sources.categories.CategoriesDataSourceImpl
-import ru.skillbranch.searchmovie.data.sources.movies.MoviesDataSourceImpl
 
 class MoviesViewModel : ViewModel() {
-    private val moviesRepository: MoviesRepository = MoviesRepository(MoviesDataSourceImpl())
+    private val moviesRepository = MoviesRepository()
     private val categoriesRepository: CategoriesRepository =
         CategoriesRepository(CategoriesDataSourceImpl())
 
@@ -31,7 +30,11 @@ class MoviesViewModel : ViewModel() {
     }
 
     init {
-        _moviesList.postValue(moviesRepository.getMovies())
+        viewModelScope.launch {
+            withContext(Dispatchers.IO + coroutineExceptionHandler) {
+                _moviesList.postValue(moviesRepository.getMovies())
+            }
+        }
         _categoriesList.postValue(categoriesRepository.getCategories())
     }
 
@@ -46,7 +49,11 @@ class MoviesViewModel : ViewModel() {
         return categoriesRepository.getCategories()
     }
 
-    fun getMovies(): List<MovieDto> {
-        return moviesRepository.getMovies()
+    fun getMovies(): LiveData<List<MovieDto>> {
+        val result = MutableLiveData<List<MovieDto>>()
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            result.postValue(moviesRepository.getMovies())
+        }
+        return result
     }
 }

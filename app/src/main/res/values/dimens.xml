@@ -157,4 +157,7 @@
     <dimen name="text_size_for_user_profile_grey_hints">12sp</dimen>
     <dimen name="text_size_for_user_profile_settings_item">14sp</dimen>
     <dimen name="item_rating_and_limit_top_margin">6dp</dimen>
+    <dimen name="margin_bottom_for_log_in_user_name">40dp</dimen>
+    <dimen name="margin_top_for_log_in_password">20dp</dimen>
+    <dimen name="margin_top_for_log_in_button">20dp</dimen>
 </resources>
