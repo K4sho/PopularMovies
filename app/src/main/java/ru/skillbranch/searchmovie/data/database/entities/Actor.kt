@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class Actor(
     @PrimaryKey
     @ColumnInfo(name = "actor_id")
-    var actorId: Int,
+    var actorId: String,
     @ColumnInfo(name = "name")
     var actorName: String,
     @ColumnInfo(name = "url_photo")

@@ -9,10 +9,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.notifications.PushService
 
@@ -72,6 +74,35 @@ class MainActivity : AppCompatActivity() {
 
         registerReceiver(pushBroadcastReceiver, intentFilter)
     }
+
+    /**private val observer: Observer<RootViewModel.LoadingDataState> =
+        Observer {
+            when (it) {
+                RootViewModel.LoadingDataState.UNKNOWN -> {
+                    rootViewModel.loadData()
+                }
+                RootViewModel.LoadingDataState.FINISHED -> {
+                    val parentLayout: View = findViewById(R.id.nav_fragment_container)
+                    Snackbar
+                        .make(parentLayout, "Загружены данные из сети", Snackbar.LENGTH_LONG)
+                        .show()
+                }
+                RootViewModel.LoadingDataState.ERROR -> {
+                    val parentLayout: View = findViewById(R.id.nav_fragment_container)
+                    Snackbar
+                        .make(
+                            parentLayout,
+                            "Не удалось загрузить данные из сети",
+                            Snackbar.LENGTH_LONG
+                        )
+                        .show()
+                }
+            }
+        }
+
+    private fun loadData() {
+        rootViewModel.loadingDataState.observe(this, observer)
+    }*/
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()

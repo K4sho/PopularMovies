@@ -15,7 +15,7 @@
     <string name="main_empty_message">empty</string>
     <string name="item_movie_description">Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя…</string>
     <string name="empty_movies_list">Сейчас здесь нет
-фильмов, но мы уже отправили режиссёра снимать фильм для вас</string>
+фильмов, потяните вниз и вы получите список популярных фильмов</string>
     <string name="user_name">Константин</string>
     <string name="user_email">konst.89@mail.com</string>
     <string name="interests">Интересы</string>
@@ -40,4 +40,5 @@
     <string name="exit">Выйти</string>
     <string name="tell_about_problem">Сообщить о проблеме</string>
     <string name="log_in">Войти</string>
+    <string name="error_internet_connection">Проверьте интернет соединение!</string>
 </resources>

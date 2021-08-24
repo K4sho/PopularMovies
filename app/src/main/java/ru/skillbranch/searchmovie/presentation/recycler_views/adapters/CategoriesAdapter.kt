@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.dto.CategoryDto
+import ru.skillbranch.searchmovie.data.database.entities.Genre
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.CategoriesListener
 import ru.skillbranch.searchmovie.presentation.recycler_views.CategoriesCallback
 import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.CategoriesViewHolder
@@ -14,7 +14,7 @@ import ru.skillbranch.searchmovie.presentation.recycler_views.view_holders.Categ
 class CategoriesRecyclerAdapter(private val listener: CategoriesListener) :
     RecyclerView.Adapter<CategoriesViewHolder>() {
 
-    private var categories: List<CategoryDto> = emptyList()
+    private var categories: List<Genre> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesViewHolder {
         val itemView =
@@ -32,7 +32,7 @@ class CategoriesRecyclerAdapter(private val listener: CategoriesListener) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(initCategories: List<CategoryDto>) {
+    fun setData(initCategories: List<Genre>) {
         // DiffUtil
         val categoriesCallback = CategoriesCallback(
             categories,

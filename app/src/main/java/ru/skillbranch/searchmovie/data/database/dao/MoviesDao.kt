@@ -26,21 +26,28 @@ interface MoviesDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateMovies(movies: List<Movie>)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateActors(actors: List<Actor>)
+
     @Query("DELETE FROM Movies")
     suspend fun deleteAllMovies()
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMovieActorCrossRef(crossRef: MovieActorCrossRef)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMovieActorCrossRefAll(crossRefs: List<MovieActorCrossRef>)
 
     /**
-     * Получить фильм со списком актеров
+     * Получить фильмы со списком актеров
      */
     @Transaction
     @Query("SELECT * FROM Movies")
     suspend fun getMoviesWithActors(): List<MoviesWithActors>
+
+    @Transaction
+    @Query("SELECT * FROM Movies WHERE movie_id = :idMovie ")
+    suspend fun getMovieWithActors(idMovie: Int) : MoviesWithActors
 
     // Получить кол-во фильмов
     @Query("SELECT COUNT(movie_id) FROM Movies WHERE movie_id > 0")

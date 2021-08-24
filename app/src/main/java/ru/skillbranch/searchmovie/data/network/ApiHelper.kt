@@ -7,7 +7,7 @@ import ru.skillbranch.searchmovie.data.remote_res.MoviesListRes
 import java.io.IOException
 
 // Вспомогательная функция. Позволяет вызвать метод запроса в корутине и передать сообщение, которое будет выброшено при ошибке
-suspend fun <T : Any> safeApiCall(call: suspend () -> Result<T>, errorMessage: String): Result<T> =
+/**suspend fun <T : Any> safeApiCall(call: suspend () -> Result<T>, errorMessage: String): Result<T> =
     try {
         call.invoke()
     } catch (e: Exception) {
@@ -53,4 +53,4 @@ class ApiHelper(private val apiService: ApiService) {
         }
         return Result.Error(IOException("Ошибка при запросе жанров"))
     }
-}
+}*/

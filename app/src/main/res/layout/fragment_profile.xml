@@ -50,6 +50,7 @@
             android:text="@string/user_name"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_for_user_profile_name"
+            android:contentDescription="@string/user_name"
             android:typeface="normal"
             app:layout_constraintStart_toStartOf="@id/user_info_guideline_left"
             app:layout_constraintTop_toTopOf="parent" />
@@ -145,7 +146,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/user_name"
             app:layout_constraintStart_toStartOf="@id/user_info_guideline_left"
             app:layout_constraintTop_toBottomOf="@id/tv_user_profile_title_name" />
 
@@ -166,7 +166,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
-            android:text="@string/user_password"
             app:layout_constraintStart_toStartOf="@id/user_info_guideline_left"
             app:layout_constraintTop_toBottomOf="@id/tv_user_profile_title_password" />
 
@@ -187,7 +186,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:text="@string/user_email"
             app:layout_constraintStart_toStartOf="@id/user_info_guideline_left"
             app:layout_constraintTop_toBottomOf="@id/tv_user_profile_title_email" />
 
