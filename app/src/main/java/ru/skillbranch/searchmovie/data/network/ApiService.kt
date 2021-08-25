@@ -8,14 +8,23 @@ import ru.skillbranch.searchmovie.data.remote_res.GenreRes
 import ru.skillbranch.searchmovie.data.remote_res.MoviesListRes
 
 interface ApiService {
-    @GET("movie/popular?api_key=296e24d37c4504d69452c574ad7ec88d&language=ru-Ru")
-    suspend fun getMoviesPopular(@Query("page") page: Int): MoviesListRes
+    @GET("movie/popular")
+    suspend fun getMoviesPopular(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+        @Query("page") page: Int
+    ): MoviesListRes
 
-    @GET("genre/movie/list?api_key=296e24d37c4504d69452c574ad7ec88d&language=ru-Ru")
-    suspend fun getGenresList(): GenreRes
+    @GET("genre/movie/list")
+    suspend fun getGenresList(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ): GenreRes
 
-    @GET("movie/{moviesId}/credits?api_key=296e24d37c4504d69452c574ad7ec88d&language=ru-Ru")
+    @GET("movie/{movieId}/credits")
     suspend fun getActorsList(
-        @Path("moviesId")
-        moviesId: Int): ActorRes
+        @Path("movieId") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ): ActorRes
 }

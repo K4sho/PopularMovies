@@ -75,35 +75,6 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(pushBroadcastReceiver, intentFilter)
     }
 
-    /**private val observer: Observer<RootViewModel.LoadingDataState> =
-        Observer {
-            when (it) {
-                RootViewModel.LoadingDataState.UNKNOWN -> {
-                    rootViewModel.loadData()
-                }
-                RootViewModel.LoadingDataState.FINISHED -> {
-                    val parentLayout: View = findViewById(R.id.nav_fragment_container)
-                    Snackbar
-                        .make(parentLayout, "Загружены данные из сети", Snackbar.LENGTH_LONG)
-                        .show()
-                }
-                RootViewModel.LoadingDataState.ERROR -> {
-                    val parentLayout: View = findViewById(R.id.nav_fragment_container)
-                    Snackbar
-                        .make(
-                            parentLayout,
-                            "Не удалось загрузить данные из сети",
-                            Snackbar.LENGTH_LONG
-                        )
-                        .show()
-                }
-            }
-        }
-
-    private fun loadData() {
-        rootViewModel.loadingDataState.observe(this, observer)
-    }*/
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
     }

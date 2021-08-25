@@ -9,7 +9,7 @@ import ru.skillbranch.searchmovie.data.database.entities.MoviesWithActors
 @Dao
 interface MoviesDao {
     @Query("SELECT * FROM Movies")
-    fun getAllMovies(): List<Movie>
+    suspend fun getAllMovies(): List<Movie>
 
     @Query("SELECT * FROM Movies WHERE movie_id = :movieId")
     fun getMovieById(movieId: Int): Movie
