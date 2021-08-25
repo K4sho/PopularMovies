@@ -8,4 +8,5 @@ object AppConfig {
     const val API_KEY = "296e24d37c4504d69452c574ad7ec88d"
     const val API_PAGE_SIZE = 1000
     const val LANGUAGE_API = "ru-RU"
+    const val TAG_WORKMANAGER_UPDATING_MOVIES = "WM_UPDATING_MOVIES"
 }

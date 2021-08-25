@@ -9,14 +9,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
+import ru.skillbranch.searchmovie.AppConfig.TAG_WORKMANAGER_UPDATING_MOVIES
 import ru.skillbranch.searchmovie.R
+import ru.skillbranch.searchmovie.data.background.UpdateMoviesWorker
 import ru.skillbranch.searchmovie.notifications.PushService
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.nav_fragment_container)
+
+        /// Запустим WorkManager
+        runUpdatingMoviesManager()
 
         bottomNavigationView = findViewById(R.id.bottom_nav_view)
         bottomNavigationView.setupWithNavController(navController)
@@ -92,6 +97,23 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(pushBroadcastReceiver)
+    }
+
+    private fun runUpdatingMoviesManager() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .build()
+
+        val periodicRequest =
+            PeriodicWorkRequest.Builder(UpdateMoviesWorker::class.java, 1, TimeUnit.DAYS)
+                .setConstraints(constraints)
+                .build()
+
+        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
+            TAG_WORKMANAGER_UPDATING_MOVIES,
+            ExistingPeriodicWorkPolicy.KEEP,
+            periodicRequest
+        )
     }
 
 }
