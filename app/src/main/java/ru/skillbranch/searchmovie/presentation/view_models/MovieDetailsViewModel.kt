@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import ru.skillbranch.searchmovie.App
 import ru.skillbranch.searchmovie.data.database.entities.Actor
 import ru.skillbranch.searchmovie.data.database.entities.Movie
@@ -40,7 +37,7 @@ class MovieDetailsViewModel() : ViewModel() {
 
     fun getMovieByIdWithActors(movieId: Int) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO + exceptionHandler) {
+            withContext(SupervisorJob() + Dispatchers.IO + exceptionHandler) {
                 // Актеры уже должны быть в БД
                 _loadingDataState.postValue(LoadingDataState.LOADING)
                 val movieWithActors = moviesRepository.getMovieWithActorsFromDB(movieId)
