@@ -40,28 +40,16 @@
             android:paddingBottom="@dimen/movie_info_card_padding_bottom"
             android:background="@drawable/info_background">
 
-            <ImageView
-                android:id="@+id/iv_rectangle_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/main_left_margin"
-                android:layout_marginTop="@dimen/age_limit_top_margin"
-                android:background="@drawable/ic_rectangle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/tv_genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/genre_margin_top_in_rect"
-                android:gravity="center_vertical|start"
-                android:lineSpacingExtra="0sp"
+                android:layout_marginStart="@dimen/main_left_margin"
+                android:layout_marginTop="@dimen/age_limit_top_margin"
+                style="@style/BaseText.movie_category"
                 android:text="@string/genre"
-                android:textAppearance="@style/genre"
-                app:layout_constraintStart_toStartOf="@id/iv_rectangle_1"
-                app:layout_constraintEnd_toEndOf="@id/iv_rectangle_1"
-                app:layout_constraintTop_toTopOf="@id/iv_rectangle_1" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_date_movie"
@@ -73,41 +61,30 @@
                 android:lineSpacingExtra="0sp"
                 android:text="@string/date_movie"
                 android:textAppearance="@style/date_movie"
-                app:layout_constraintStart_toEndOf="@id/iv_rectangle_1"
+                app:layout_constraintStart_toEndOf="@id/tv_genre"
                 app:layout_constraintTop_toTopOf="parent">
 
             </TextView>
-
-            <ImageView
-                android:id="@+id/iv_age_limit_ellipse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/age_limit_image_margin_top"
-                android:layout_marginEnd="@dimen/main_left_margin"
-                android:background="@drawable/ic_ellipse"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </ImageView>
 
             <TextView
                 android:id="@+id/tv_age_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/age_limit_margin_top"
-                android:layout_marginEnd="@dimen/age_limit_margin_end"
+                android:layout_marginTop="@dimen/age_limit_image_margin_top"
+                android:layout_marginEnd="@dimen/main_left_margin"
                 android:gravity="center"
                 android:lineSpacingExtra="0sp"
                 android:text="@string/age_limit"
                 android:textAlignment="center"
                 android:textAppearance="@style/age_limit"
+                android:background="@drawable/ic_ellipse"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_movie_title"
-                android:layout_width="182dp"
-                android:layout_height="22dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/main_left_margin"
                 android:layout_marginTop="@dimen/movie_tittle_margin_top"
                 android:gravity="center_vertical"
