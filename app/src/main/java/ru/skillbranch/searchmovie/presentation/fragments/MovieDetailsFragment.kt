@@ -2,6 +2,7 @@ package ru.skillbranch.searchmovie.presentation.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,89 +38,92 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var movieReleaseDate: TextView
     private lateinit var fragmentView: View
     private lateinit var actorsRecyclerView: RecyclerView
-    private lateinit var viewModel: MovieDetailsViewModel
+    private val viewModel: MovieDetailsViewModel by viewModels()
 
-    private val stateObserver = Observer { state: MovieDetailsViewModel.LoadingDataState ->
-        when (state) {
-            MovieDetailsViewModel.LoadingDataState.ERROR -> {
-                Snackbar.make(
-                    requireActivity().findViewById(R.id.container),
-                    "Не удалось загрузить детали фильма",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-            MovieDetailsViewModel.LoadingDataState.LOADING -> {
-                Snackbar.make(
-                    requireActivity().findViewById(R.id.container),
-                    "Загрузка данных о актерах",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-            MovieDetailsViewModel.LoadingDataState.FINISHED -> {
-            }
-            else -> {
-                Snackbar.make(
-                    requireActivity().findViewById(R.id.container),
-                    "Сбой при попытке загрузить детали фильма",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
-    private val actorsInfoObserver = Observer { actors: List<Actor> ->
-        setActorsCastRecycleView(actors)
-    }
-
-    private val movieInfoObserver = Observer { movie: Movie ->
-        moviePoster = fragmentView.findViewById(R.id.iv_banner)
-        movieGenre = fragmentView.findViewById(R.id.tv_genre)
-        movieNameTextView = fragmentView.findViewById(R.id.tv_movie_title)
-        movieDescriptionTextView = fragmentView.findViewById(R.id.tv_description_movie)
-        movieAgeTextView = fragmentView.findViewById(R.id.tv_age_limit)
-        movieReleaseDate = fragmentView.findViewById(R.id.tv_date_movie)
-
-        /// Устанавливаем фон
-        if (movie.backgroundImage.isEmpty()) {
-            Glide
-                .with(requireContext())
-                .load(R.drawable.placeholder_bg)
-                .into(moviePoster)
-        } else {
-            Glide
-                .with(requireContext())
-                .load(movie.backgroundImage)
-                .into(moviePoster)
-        }
-        movieGenre.text = genresList.find { it.id == movie.genresIds.first() }?.name
-        movieNameTextView.text = movie.title
-        movieDescriptionTextView.text = movie.description
-        movieReleaseDate.text = movie.releaseDate
-        movieAgeTextView.text = movie.ageLimit.toString() + "+"
-        val iconStar = ResourcesCompat.getDrawable(
-            fragmentView.context.resources,
-            R.drawable.ic_star_selected,
-            null
-        )
-        val starImagesRating = listOf<ImageView>(
-            fragmentView.findViewById(R.id.rating_star_1),
-            fragmentView.findViewById(R.id.rating_star_2),
-            fragmentView.findViewById(R.id.rating_star_3),
-            fragmentView.findViewById(R.id.rating_star_4),
-            fragmentView.findViewById(R.id.rating_star_5)
-        )
-        val maxScore = movie.rateScore ?: MAX_RATE_SCORE
-        for (i in 0 until maxScore) {
-            starImagesRating[i].setImageDrawable(iconStar)
-        }
-    }
+    private lateinit var stateObserver: Observer<MovieDetailsViewModel.LoadingDataState>
+    private lateinit var actorsInfoObserver: Observer<List<Actor>>
+    private lateinit var movieInfoObserver: Observer<Movie>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             movieId = it.getInt(MOVIE_ID)
         }
-        viewModel = ViewModelProvider(requireActivity()).get(MovieDetailsViewModel::class.java)
+        stateObserver = Observer { state: MovieDetailsViewModel.LoadingDataState ->
+            when (state) {
+                MovieDetailsViewModel.LoadingDataState.ERROR -> {
+                    Snackbar.make(
+                        requireActivity().findViewById(R.id.container),
+                        "Не удалось загрузить детали фильма",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+                MovieDetailsViewModel.LoadingDataState.LOADING -> {
+                    Snackbar.make(
+                        requireActivity().findViewById(R.id.container),
+                        "Загрузка данных о актерах",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+                MovieDetailsViewModel.LoadingDataState.FINISHED -> {
+                }
+                else -> {
+                    Snackbar.make(
+                        requireActivity().findViewById(R.id.container),
+                        "Сбой при попытке загрузить детали фильма",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+        actorsInfoObserver = Observer { actors: List<Actor> ->
+            setActorsCastRecycleView(actors)
+        }
+
+        movieInfoObserver = Observer { movie: Movie ->
+            moviePoster = fragmentView.findViewById(R.id.iv_banner)
+            movieGenre = fragmentView.findViewById(R.id.tv_genre)
+            movieNameTextView = fragmentView.findViewById(R.id.tv_movie_title)
+            movieDescriptionTextView = fragmentView.findViewById(R.id.tv_description_movie)
+            movieAgeTextView = fragmentView.findViewById(R.id.tv_age_limit)
+            movieReleaseDate = fragmentView.findViewById(R.id.tv_date_movie)
+
+            /// Устанавливаем фон
+            if (movie.backgroundImage.isEmpty()) {
+                Glide
+                    .with(requireContext())
+                    .load(R.drawable.placeholder_bg)
+                    .into(moviePoster)
+            } else {
+                Glide
+                    .with(requireContext())
+                    .load(movie.backgroundImage)
+                    .into(moviePoster)
+            }
+            movieGenre.text = genresList.find { it.id == movie.genresIds.first() }?.name
+            movieNameTextView.text = movie.title
+            movieDescriptionTextView.text = movie.description
+            movieReleaseDate.text = movie.releaseDate
+            movieAgeTextView.text = movie.ageLimit.toString() + "+"
+            val iconStar = ResourcesCompat.getDrawable(
+                fragmentView.context.resources,
+                R.drawable.ic_star_selected,
+                null
+            )
+            val starImagesRating = listOf<ImageView>(
+                fragmentView.findViewById(R.id.rating_star_1),
+                fragmentView.findViewById(R.id.rating_star_2),
+                fragmentView.findViewById(R.id.rating_star_3),
+                fragmentView.findViewById(R.id.rating_star_4),
+                fragmentView.findViewById(R.id.rating_star_5)
+            )
+            val maxScore = movie.rateScore ?: MAX_RATE_SCORE
+            for (i in 0 until maxScore) {
+                starImagesRating[i].setImageDrawable(iconStar)
+            }
+        }
+
         viewModel.getMovieByIdWithActors(movieId)
     }
 
