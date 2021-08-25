@@ -83,10 +83,11 @@
 
             <TextView
                 android:id="@+id/tv_movie_title"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/main_left_margin"
                 android:layout_marginTop="@dimen/movie_tittle_margin_top"
+                android:singleLine="false"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="0sp"
                 android:text="@string/movie_name"
