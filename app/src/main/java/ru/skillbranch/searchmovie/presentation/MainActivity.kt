@@ -9,13 +9,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ru.skillbranch.searchmovie.App
+import com.google.android.material.snackbar.Snackbar
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.repository.RootRepository
 import ru.skillbranch.searchmovie.notifications.PushService
 
 class MainActivity : AppCompatActivity() {
@@ -23,14 +23,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var pushBroadcastReceiver: BroadcastReceiver
-    private val rootRepository = RootRepository(App.database)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.nav_fragment_container)
-
-        rootRepository.fillDefaultData()
 
         bottomNavigationView = findViewById(R.id.bottom_nav_view)
         bottomNavigationView.setupWithNavController(navController)

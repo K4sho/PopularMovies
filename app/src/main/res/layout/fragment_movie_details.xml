@@ -40,28 +40,16 @@
             android:paddingBottom="@dimen/movie_info_card_padding_bottom"
             android:background="@drawable/info_background">
 
-            <ImageView
-                android:id="@+id/iv_rectangle_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/main_left_margin"
-                android:layout_marginTop="@dimen/age_limit_top_margin"
-                android:background="@drawable/ic_rectangle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/tv_genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/genre_margin_top_in_rect"
-                android:gravity="center_vertical|start"
-                android:lineSpacingExtra="0sp"
+                android:layout_marginStart="@dimen/main_left_margin"
+                android:layout_marginTop="@dimen/age_limit_top_margin"
+                style="@style/BaseText.movie_category"
                 android:text="@string/genre"
-                android:textAppearance="@style/genre"
-                app:layout_constraintStart_toStartOf="@id/iv_rectangle_1"
-                app:layout_constraintEnd_toEndOf="@id/iv_rectangle_1"
-                app:layout_constraintTop_toTopOf="@id/iv_rectangle_1" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_date_movie"
@@ -73,43 +61,33 @@
                 android:lineSpacingExtra="0sp"
                 android:text="@string/date_movie"
                 android:textAppearance="@style/date_movie"
-                app:layout_constraintStart_toEndOf="@id/iv_rectangle_1"
+                app:layout_constraintStart_toEndOf="@id/tv_genre"
                 app:layout_constraintTop_toTopOf="parent">
 
             </TextView>
-
-            <ImageView
-                android:id="@+id/iv_age_limit_ellipse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/age_limit_image_margin_top"
-                android:layout_marginEnd="@dimen/main_left_margin"
-                android:background="@drawable/ic_ellipse"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </ImageView>
 
             <TextView
                 android:id="@+id/tv_age_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/age_limit_margin_top"
-                android:layout_marginEnd="@dimen/age_limit_margin_end"
+                android:layout_marginTop="@dimen/age_limit_image_margin_top"
+                android:layout_marginEnd="@dimen/main_left_margin"
                 android:gravity="center"
                 android:lineSpacingExtra="0sp"
                 android:text="@string/age_limit"
                 android:textAlignment="center"
                 android:textAppearance="@style/age_limit"
+                android:background="@drawable/ic_ellipse"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_movie_title"
-                android:layout_width="182dp"
-                android:layout_height="22dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/main_left_margin"
                 android:layout_marginTop="@dimen/movie_tittle_margin_top"
+                android:singleLine="false"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="0sp"
                 android:text="@string/movie_name"
@@ -203,80 +181,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/barrierDescriptionline" />
 
-            <HorizontalScrollView
-                android:id="@+id/scroll_view_actors"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_actors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tv_movie_actors"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraint_horizontal_scroll_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/iv_actor_1"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:srcCompat="@drawable/image_artist_1"
-                        style="@style/first_artist_image"
-                        />
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/iv_actor_2"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/iv_actor_1"
-                        app:srcCompat="@drawable/image_artist_2"
-                        style="@style/artist_image"/>
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/iv_actor_3"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/iv_actor_2"
-                        app:srcCompat="@drawable/image_artist_3"
-                        style="@style/artist_image"/>
-
-                    <TextView
-                        android:id="@+id/tv_actor_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/actors_name_top_offset"
-                        android:layout_marginStart="@dimen/main_left_margin"
-                        android:text="@string/actor_1"
-                        android:textAppearance="@style/actors_name"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/iv_actor_1"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_actor_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/actors_name_start_offset"
-                        android:layout_marginTop="@dimen/actors_name_top_offset"
-                        android:text="@string/actor_2"
-                        android:textAppearance="@style/actors_name"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toRightOf="@id/iv_actor_1"
-                        app:layout_constraintTop_toBottomOf="@id/iv_actor_2" />
-
-                    <TextView
-                        android:id="@+id/tv_actor_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/actors_name_start_offset"
-                        android:layout_marginTop="@dimen/actors_name_top_offset"
-                        android:text="@string/actor_3"
-                        android:textAppearance="@style/actors_name"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/iv_actor_3"
-                        app:layout_constraintLeft_toRightOf="@id/iv_actor_2" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </HorizontalScrollView>
+                app:layout_constraintRight_toRightOf="parent"
+                tools:listitem="@layout/item_actor"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

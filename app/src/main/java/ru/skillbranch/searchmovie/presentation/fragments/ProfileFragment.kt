@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.dto.MovieDto
 import ru.skillbranch.searchmovie.presentation.view_models.MoviesViewModel
 import ru.skillbranch.searchmovie.presentation.view_models.ProfileState
 import ru.skillbranch.searchmovie.presentation.view_models.ProfileViewModel

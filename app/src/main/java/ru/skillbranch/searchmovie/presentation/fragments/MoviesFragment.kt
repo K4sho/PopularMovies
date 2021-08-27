@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.Snackbar
+import ru.skillbranch.searchmovie.App
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.dto.CategoryDto
-import ru.skillbranch.searchmovie.data.dto.MovieDto
+import ru.skillbranch.searchmovie.data.database.entities.Movie
+import ru.skillbranch.searchmovie.data.utils.genresList
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.CategoriesListener
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
 import ru.skillbranch.searchmovie.presentation.recycler_views.adapters.CategoriesRecyclerAdapter
@@ -36,20 +38,29 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private val moviesAdapter = MoviesRecyclerAdapter(this)
     private lateinit var navController: NavController
 
-    private val moviesObserver = Observer { items: List<MovieDto> ->
+    /// Observers
+    private val moviesObserver = Observer { items: List<Movie> ->
         moviesAdapter.setData(items)
         pullToRefreshLayout?.isRefreshing = false
     }
 
-    private val categoriesObserver = Observer { items: List<CategoryDto> ->
-        categoriesAdapter.setData(items)
+
+    private val loadingStateObserver = Observer { state: MoviesViewModel.LoadingDataState ->
+        when (state) {
+            MoviesViewModel.LoadingDataState.ERROR -> {
+            }
+            MoviesViewModel.LoadingDataState.UNKNOWN -> {
+            }
+            MoviesViewModel.LoadingDataState.FINISHED -> {
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
         viewModel.moviesList.observe(requireActivity(), moviesObserver)
-        viewModel.categoriesList.observe(requireActivity(), categoriesObserver)
+        viewModel.loadingDataState.observe(requireActivity(), loadingStateObserver)
     }
 
     override fun onCreateView(
@@ -65,7 +76,16 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         navController = view.findNavController()
         pullToRefreshLayout = view.findViewById(R.id.movies_refresh_layout)
         pullToRefreshLayout?.setOnRefreshListener {
-            viewModel.handleRefreshMovies()
+            if (App.isNetworkActive) {
+                viewModel.handleRefreshMoviesFromApi()
+            } else {
+                pullToRefreshLayout?.isRefreshing = false
+                Snackbar.make(
+                    requireActivity().findViewById(R.id.container),
+                    getString(R.string.error_internet_connection),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
         initRecyclersGenreAndMovies(view)
     }
@@ -76,6 +96,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
 
         // Прокидываем адаптеры
         categoriesRecyclerView.adapter = categoriesAdapter
+        categoriesAdapter.setData(genresList)
         moviesRecyclerView.adapter = moviesAdapter
 
         // Настраиваем LayoutManager's
@@ -121,5 +142,11 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
             R.id.action_nav_movie_fragment_to_nav_movies_details_fragment,
             bundle
         )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.moviesList.removeObserver(moviesObserver)
+        viewModel.loadingDataState.removeObserver(loadingStateObserver)
     }
 }

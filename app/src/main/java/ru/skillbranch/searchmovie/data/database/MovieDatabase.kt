@@ -1,24 +1,18 @@
 package ru.skillbranch.searchmovie.data.database
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import ru.skillbranch.searchmovie.data.database.dao.MoviesDao
 import ru.skillbranch.searchmovie.data.database.dao.ProfileDao
 import ru.skillbranch.searchmovie.data.database.entities.Actor
 import ru.skillbranch.searchmovie.data.database.entities.Movie
 import ru.skillbranch.searchmovie.data.database.entities.MovieActorCrossRef
 import ru.skillbranch.searchmovie.data.database.entities.Profile
+import ru.skillbranch.searchmovie.data.database.typeconvertes.ListIntConverter
 import ru.skillbranch.searchmovie.data.database.typeconvertes.ListStringConverter
-import ru.skillbranch.searchmovie.data.sources.movies.ActorsDataSourceDefault
-import ru.skillbranch.searchmovie.data.sources.movies.MoviesDataSourceDefault
 
 @Database(
     entities = [
@@ -27,13 +21,13 @@ import ru.skillbranch.searchmovie.data.sources.movies.MoviesDataSourceDefault
         MovieActorCrossRef::class,
         Profile::class
     ],
-    version = 6,
+    version = 10,
     exportSchema = false
 )
-@TypeConverters(ListStringConverter::class)
+@TypeConverters(ListStringConverter::class, ListIntConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
-    abstract val movieAppDao: MoviesDao
-    abstract val userDao: ProfileDao
+    abstract fun movieAppDao(): MoviesDao
+    abstract fun userDao(): ProfileDao
 
     companion object {
         @Volatile
@@ -50,5 +44,9 @@ abstract class MovieDatabase : RoomDatabase() {
                 }
             }
         }
+    }
+
+    suspend fun isEmpty(): Boolean {
+        return movieAppDao().getCount() == 0
     }
 }

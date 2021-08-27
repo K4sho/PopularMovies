@@ -4,9 +4,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.dto.MovieDto
+import ru.skillbranch.searchmovie.data.database.entities.Movie
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
 
 class MoviesViewHolder(itemView: View, private val movieClickListener: MovieClickListener) :
@@ -27,9 +28,21 @@ class MoviesViewHolder(itemView: View, private val movieClickListener: MovieClic
     private val movieAgeRatingTextView: TextView =
         itemView.findViewById(R.id.tv_item_movie_age_limit)
 
-    fun bind(movie: MovieDto) {
-        itemView.setOnClickListener { movieClickListener.onMovieClick(movie.id) }
-        movieCoverImageView.load(movie.imageUrl)
+    fun bind(movie: Movie) {
+        itemView.setOnClickListener { movieClickListener.onMovieClick(movie.movieId) }
+        if (movie.imageUrl.isEmpty()) {
+            Glide
+                .with(itemView.context)
+                .load(R.drawable.placeholder_poster)
+                .transform(RoundedCorners(10))
+                .into(movieCoverImageView)
+        } else {
+            Glide
+                .with(itemView.context)
+                .load(movie.imageUrl)
+                .transform(RoundedCorners(10))
+                .into(movieCoverImageView)
+        }
         movieTitleTextView.text = movie.title
         movieDescriptionTextView.text = movie.description
         starsRating.forEachIndexed { index, star ->

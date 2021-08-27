@@ -23,6 +23,7 @@
     <dimen name="movie_tittle_margin_top">16dp</dimen>
     <dimen name="artist_image_width">150dp</dimen>
     <dimen name="artist_image_height">196dp</dimen>
+    <dimen name="artis_image_item_height">120dp</dimen>
     <dimen name="artist_image_corner">10dp</dimen>
     <dimen name="artist_image_margin_top">16dp</dimen>
     <dimen name="artist_image_margin_start">10dp</dimen>
@@ -160,4 +161,7 @@
     <dimen name="margin_bottom_for_log_in_user_name">40dp</dimen>
     <dimen name="margin_top_for_log_in_password">20dp</dimen>
     <dimen name="margin_top_for_log_in_button">20dp</dimen>
+
+    <dimen name="offSetActorCard">10dp</dimen>
+    <dimen name="offSetBottomActorCard">20dp</dimen>
 </resources>

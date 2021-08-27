@@ -1,11 +1,11 @@
 package ru.skillbranch.searchmovie.presentation.recycler_views
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.skillbranch.searchmovie.data.dto.CategoryDto
+import ru.skillbranch.searchmovie.data.database.entities.Genre
 
 class CategoriesCallback(
-    private val oldList: List<CategoryDto>,
-    private val newList: List<CategoryDto>
+    private val oldList: List<Genre>,
+    private val newList: List<Genre>
 ) :
     DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size

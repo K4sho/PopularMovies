@@ -6,54 +6,61 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
-import ru.skillbranch.searchmovie.data.dto.CategoryDto
-import ru.skillbranch.searchmovie.data.dto.MovieDto
-import ru.skillbranch.searchmovie.data.repository.CategoriesRepository
+import ru.skillbranch.searchmovie.data.database.entities.Movie
 import ru.skillbranch.searchmovie.data.repository.MoviesRepository
-import ru.skillbranch.searchmovie.data.sources.categories.CategoriesDataSourceImpl
+import java.lang.Exception
 
 class MoviesViewModel : ViewModel() {
+    enum class LoadingDataState {
+        UNKNOWN,
+        LOADING,
+        FINISHED,
+        ERROR
+    }
+
     private val moviesRepository = MoviesRepository()
-    private val categoriesRepository: CategoriesRepository =
-        CategoriesRepository(CategoriesDataSourceImpl())
 
-    val moviesList: LiveData<List<MovieDto>>
+    val moviesList: LiveData<List<Movie>>
         get() = _moviesList
-    private val _moviesList = MutableLiveData<List<MovieDto>>()
+    private val _moviesList = MutableLiveData<List<Movie>>()
 
-    val categoriesList: LiveData<List<CategoryDto>>
-        get() = _categoriesList
-    private val _categoriesList = MutableLiveData<List<CategoryDto>>()
+    val loadingDataState: LiveData<LoadingDataState>
+        get() = _loadingDataState
+    private val _loadingDataState = MutableLiveData<LoadingDataState>()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        _moviesList.postValue(listOf())
         Log.d("CoroutineException", "Нет фильмов для отображения $exception")
     }
 
     init {
+        _loadingDataState.value = LoadingDataState.UNKNOWN
+
+        // Заполняем данными из БД
         viewModelScope.launch {
             withContext(Dispatchers.IO + coroutineExceptionHandler) {
-                _moviesList.postValue(moviesRepository.getMovies())
+                try {
+                    _loadingDataState.postValue(LoadingDataState.LOADING)
+                    _moviesList.postValue(moviesRepository.getMovies())
+                    _loadingDataState.postValue(LoadingDataState.FINISHED)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    _loadingDataState.postValue(LoadingDataState.ERROR)
+                }
             }
         }
-        _categoriesList.postValue(categoriesRepository.getCategories())
     }
 
-    fun handleRefreshMovies() {
+    fun handleRefreshMoviesFromApi() {
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-            val movies = moviesRepository.getRefreshMovies()
-            _moviesList.postValue(movies)
+            try {
+                _loadingDataState.postValue(LoadingDataState.LOADING)
+                _moviesList.postValue(moviesRepository.getMoviesFromApi())
+                _loadingDataState.postValue(LoadingDataState.FINISHED)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _loadingDataState.postValue(LoadingDataState.ERROR)
+            }
         }
-    }
-
-    fun getCategories(): List<CategoryDto> {
-        return categoriesRepository.getCategories()
-    }
-
-    fun getMovies(): LiveData<List<MovieDto>> {
-        val result = MutableLiveData<List<MovieDto>>()
-        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-            result.postValue(moviesRepository.getMovies())
-        }
-        return result
     }
 }
