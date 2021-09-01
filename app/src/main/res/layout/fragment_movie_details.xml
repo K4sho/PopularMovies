@@ -11,37 +11,46 @@
         android:layout_height="match_parent"
         app:layoutDescription="@xml/details_fragment_scene">
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <ImageView
             android:id="@+id/iv_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/movie_description"
-            android:scaleType="centerCrop"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:importantForAccessibility="no"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/image_banner_jason" />
+            app:background="@color/white" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/movie_details_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/movie_details_guideline_begin"/>
+
+        <ImageView
+            android:id="@+id/movie_details_panel_top"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@id/iv_banner"
+            app:layout_constraintTop_toTopOf="@id/movie_details_guideline"
+            android:background="@drawable/info_background" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view_card"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@id/movie_details_panel_top">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/card_info_about_movie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/movie_card_info_top_margin"
-                android:background="@drawable/info_background"
-                android:paddingBottom="@dimen/movie_info_card_padding_bottom"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_genre"
