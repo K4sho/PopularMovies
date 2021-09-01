@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
+import jp.wasabeef.recyclerview.animators.LandingAnimator
 import ru.skillbranch.searchmovie.App
 import ru.skillbranch.searchmovie.R
 import ru.skillbranch.searchmovie.data.database.entities.Movie
@@ -68,6 +69,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        postponeEnterTransition()
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
@@ -93,11 +95,16 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private fun initRecyclersGenreAndMovies(view: View) {
         categoriesRecyclerView = view.findViewById(R.id.rv_categories)
         moviesRecyclerView = view.findViewById(R.id.rv_movies)
-
         // Прокидываем адаптеры
         categoriesRecyclerView.adapter = categoriesAdapter
         categoriesAdapter.setData(genresList)
         moviesRecyclerView.adapter = moviesAdapter
+        moviesRecyclerView.itemAnimator = LandingAnimator().apply {
+            addDuration = 1000
+            removeDuration = 100
+            moveDuration = 1000
+            changeDuration = 100
+        }
 
         // Настраиваем LayoutManager's
         categoriesRecyclerView.layoutManager =
@@ -124,6 +131,11 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         val bottomSpaceItemDecoration = BottomSpaceItemDecoration(bottomSpace)
         moviesRecyclerView.addItemDecoration(itemDecoration)
         moviesRecyclerView.addItemDecoration(bottomSpaceItemDecoration)
+
+        moviesRecyclerView.viewTreeObserver.addOnPreDrawListener {
+            startPostponedEnterTransition()
+            true
+        }
     }
 
     companion object {

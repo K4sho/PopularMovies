@@ -89,4 +89,7 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.5.0")
     implementation "androidx.work:work-multiprocess:2.5.0"
     androidTestImplementation "androidx.work:work-testing:2.5.0"
+
+    // RecyclerView animation
+    implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
 }

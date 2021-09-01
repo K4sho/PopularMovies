@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import ru.skillbranch.searchmovie.R
@@ -46,6 +48,11 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /// Анимация
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.movie_poster_transition)
+        sharedElementReturnTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.movie_poster_transition)
         arguments?.let {
             movieId = it.getInt(MOVIE_ID)
         }
@@ -142,6 +149,7 @@ class MovieDetailsFragment : Fragment() {
         viewModel.movie.observe(requireActivity(), movieInfoObserver)
         viewModel.actors.observe(requireActivity(), actorsInfoObserver)
         viewModel.loadingDataState.observe(requireActivity(), stateObserver)
+        requireView().findViewById<MotionLayout>(R.id.movie_details_root).transitionToEnd()
     }
 
     override fun onDestroyView() {
