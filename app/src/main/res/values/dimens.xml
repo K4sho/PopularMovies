@@ -166,4 +166,6 @@
     <dimen name="offSetBottomActorCard">20dp</dimen>
     <dimen name="movie_details_guideline_begin">224dp</dimen>
     <dimen name="movie_banner_height">290dp</dimen>
+    <dimen name="motion_constraint_start_margin_top">66dp</dimen>
+    <dimen name="motion_constraint_start_scroll_margin_top">32dp</dimen>
 </resources>

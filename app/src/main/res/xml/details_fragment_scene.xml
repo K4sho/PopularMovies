@@ -18,7 +18,7 @@
             motion:layout_constraintBottom_toBottomOf="@id/iv_banner"
             motion:layout_constraintTop_toTopOf="@id/movie_details_guideline"
             android:id="@+id/movie_details_panel_top"
-            android:layout_marginTop="66dp" />
+            android:layout_marginTop="@dimen/motion_constraint_start_margin_top" />
         <Constraint
             android:id="@+id/movie_details_scroll"
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintTop_toTopOf="@id/movie_details_panel_top"
             motion:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/motion_constraint_start_scroll_margin_top"
             android:alpha="0.1" />
     </ConstraintSet>
 
