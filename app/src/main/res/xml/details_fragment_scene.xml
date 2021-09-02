@@ -5,7 +5,7 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="2000"
+        motion:duration="1000"
         motion:motionInterpolator="easeInOut"
         motion:layoutDuringTransition="honorRequest">
         <KeyFrameSet />
