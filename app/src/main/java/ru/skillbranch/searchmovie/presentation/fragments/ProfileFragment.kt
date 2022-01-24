@@ -3,7 +3,6 @@ package ru.skillbranch.searchmovie.presentation.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.presentation.view_models.MoviesViewModel
 import ru.skillbranch.searchmovie.presentation.view_models.ProfileState
 import ru.skillbranch.searchmovie.presentation.view_models.ProfileViewModel
 

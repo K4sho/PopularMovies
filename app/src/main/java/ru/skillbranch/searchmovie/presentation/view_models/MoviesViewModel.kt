@@ -20,13 +20,13 @@ class MoviesViewModel : ViewModel() {
 
     private val moviesRepository = MoviesRepository()
 
+    private val _moviesList = MutableLiveData<List<Movie>>()
     val moviesList: LiveData<List<Movie>>
         get() = _moviesList
-    private val _moviesList = MutableLiveData<List<Movie>>()
 
+    private val _loadingDataState = MutableLiveData<LoadingDataState>()
     val loadingDataState: LiveData<LoadingDataState>
         get() = _loadingDataState
-    private val _loadingDataState = MutableLiveData<LoadingDataState>()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         _moviesList.postValue(listOf())
@@ -35,6 +35,7 @@ class MoviesViewModel : ViewModel() {
 
     init {
         _loadingDataState.value = LoadingDataState.UNKNOWN
+        _moviesList.postValue(emptyList())
 
         // Заполняем данными из БД
         viewModelScope.launch {
