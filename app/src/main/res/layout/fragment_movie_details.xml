@@ -101,11 +101,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/main_left_margin"
                     android:layout_marginTop="@dimen/movie_tittle_margin_top"
-                    android:gravity="center_vertical"
                     android:lineSpacingExtra="0sp"
-                    android:singleLine="false"
+                    app:layout_constrainedWidth="true"
                     android:text="@string/movie_name"
                     android:textAppearance="@style/movie_name"
+                    app:layout_constraintEnd_toStartOf="@id/tv_age_limit"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_date_movie" />
 

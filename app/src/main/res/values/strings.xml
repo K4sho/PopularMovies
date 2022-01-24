@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SearchMovie</string>
+    <string name="app_name">PopularMovies</string>
     <string name="age_limit">18+</string>
     <string name="age_restriction">%1$s+</string>
     <string name="date_movie">22.04.2021</string>
@@ -41,4 +41,7 @@
     <string name="tell_about_problem">Сообщить о проблеме</string>
     <string name="log_in">Войти</string>
     <string name="error_internet_connection">Проверьте интернет соединение!</string>
+    <string name="title_search">ас</string>
+    <string name="search_movie">Поиск фильма</string>
+    <string name="toolbar_title">Популярные фильмы</string>
 </resources>

@@ -1,10 +1,11 @@
 package ru.skillbranch.searchmovie.presentation.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +29,7 @@ import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.Bottom
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.ItemMovieOffsetDecoration
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.RightSpaceItemDecoration
 import ru.skillbranch.searchmovie.presentation.view_models.MoviesViewModel
+import androidx.viewbinding.ViewBinding
 
 class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     private lateinit var categoriesRecyclerView: RecyclerView
@@ -38,9 +40,15 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         CategoriesRecyclerAdapter(this)
     private val moviesAdapter = MoviesRecyclerAdapter(this)
     private lateinit var navController: NavController
+    private var firstInitAdapter = true
 
     /// Observers
     private val moviesObserver = Observer { items: List<Movie> ->
+        if (firstInitAdapter) {
+            moviesAdapter.moviesListAll.clear()
+            moviesAdapter.moviesListAll.addAll(items)
+            firstInitAdapter = false
+        }
         moviesAdapter.setData(items)
         pullToRefreshLayout?.isRefreshing = false
     }
@@ -62,6 +70,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         viewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
         viewModel.moviesList.observe(requireActivity(), moviesObserver)
         viewModel.loadingDataState.observe(requireActivity(), loadingStateObserver)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -70,7 +79,10 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         savedInstanceState: Bundle?
     ): View? {
         postponeEnterTransition()
-        return inflater.inflate(R.layout.fragment_movies_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_movies_list, container, false)
+        val actionBar = view.findViewById(R.id.toolbar) as Toolbar?
+        (activity as? AppCompatActivity)?.setSupportActionBar(actionBar)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -156,9 +168,27 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         )
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.options_menu, menu)
+        val searchView = menu.findItem(R.id.action_search)?.actionView as SearchView?
+        searchView?.queryHint = getString(R.string.search_movie)
+
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean = false
+
+            override fun onQueryTextChange(query: String): Boolean {
+                moviesAdapter.filter.filter(query)
+                return false
+            }
+        })
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun onDestroyView() {
-        super.onDestroyView()
         viewModel.moviesList.removeObserver(moviesObserver)
         viewModel.loadingDataState.removeObserver(loadingStateObserver)
+        super.onDestroyView()
     }
 }
