@@ -7,19 +7,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import ru.skillbranch.searchmovie.App
 import ru.skillbranch.searchmovie.R
-import ru.skillbranch.searchmovie.data.database.entities.Movie
 import ru.skillbranch.searchmovie.data.utils.genresList
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.CategoriesListener
 import ru.skillbranch.searchmovie.presentation.fragments.listeners.MovieClickListener
@@ -29,47 +27,22 @@ import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.Bottom
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.ItemMovieOffsetDecoration
 import ru.skillbranch.searchmovie.presentation.recycler_views.decorations.RightSpaceItemDecoration
 import ru.skillbranch.searchmovie.presentation.view_models.MoviesViewModel
-import androidx.viewbinding.ViewBinding
+import ru.skillbranch.searchmovie.databinding.FragmentMoviesListBinding
 
 class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
-    private lateinit var categoriesRecyclerView: RecyclerView
-    private lateinit var moviesRecyclerView: RecyclerView
     private var pullToRefreshLayout: SwipeRefreshLayout? = null
-    private lateinit var viewModel: MoviesViewModel
-    private val categoriesAdapter =
-        CategoriesRecyclerAdapter(this)
-    private val moviesAdapter = MoviesRecyclerAdapter(this)
-    private lateinit var navController: NavController
+    private val viewModel by viewModels<MoviesViewModel>()
+    private lateinit var moviesAdapter: MoviesRecyclerAdapter
     private var firstInitAdapter = true
 
-    /// Observers
-    private val moviesObserver = Observer { items: List<Movie> ->
-        if (firstInitAdapter) {
-            moviesAdapter.moviesListAll.clear()
-            moviesAdapter.moviesListAll.addAll(items)
-            firstInitAdapter = false
-        }
-        moviesAdapter.setData(items)
-        pullToRefreshLayout?.isRefreshing = false
-    }
+    private var _binding: FragmentMoviesListBinding? = null
+    private val binding get() = _binding!!
 
-
-    private val loadingStateObserver = Observer { state: MoviesViewModel.LoadingDataState ->
-        when (state) {
-            MoviesViewModel.LoadingDataState.ERROR -> {
-            }
-            MoviesViewModel.LoadingDataState.UNKNOWN -> {
-            }
-            MoviesViewModel.LoadingDataState.FINISHED -> {
-            }
-        }
-    }
+    private lateinit var navController: NavController
+    private var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
-        viewModel.moviesList.observe(requireActivity(), moviesObserver)
-        viewModel.loadingDataState.observe(requireActivity(), loadingStateObserver)
         setHasOptionsMenu(true)
     }
 
@@ -77,18 +50,18 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         postponeEnterTransition()
-        val view = inflater.inflate(R.layout.fragment_movies_list, container, false)
-        val actionBar = view.findViewById(R.id.toolbar) as Toolbar?
+        val actionBar = binding.toolbar as Toolbar?
         (activity as? AppCompatActivity)?.setSupportActionBar(actionBar)
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = view.findNavController()
-        pullToRefreshLayout = view.findViewById(R.id.movies_refresh_layout)
+        pullToRefreshLayout = binding.moviesRefreshLayout
         pullToRefreshLayout?.setOnRefreshListener {
             if (App.isNetworkActive) {
                 viewModel.handleRefreshMoviesFromApi()
@@ -101,15 +74,30 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
                 ).show()
             }
         }
-        initRecyclersGenreAndMovies(view)
+        viewModel.loadingDataState.observe(
+            viewLifecycleOwner,
+            Observer { state: MoviesViewModel.LoadingDataState ->
+                when (state) {
+                    MoviesViewModel.LoadingDataState.ERROR -> {
+                    }
+                    MoviesViewModel.LoadingDataState.UNKNOWN -> {
+                    }
+                    MoviesViewModel.LoadingDataState.FINISHED -> {
+                    }
+                }
+            })
+        initRecyclersGenresAndMovies()
     }
 
-    private fun initRecyclersGenreAndMovies(view: View) {
-        categoriesRecyclerView = view.findViewById(R.id.rv_categories)
-        moviesRecyclerView = view.findViewById(R.id.rv_movies)
+    private fun initRecyclersGenresAndMovies() {
+        val categoriesRecyclerView = binding.rvCategories
+        val moviesRecyclerView = binding.rvMovies
         // Прокидываем адаптеры
+        moviesAdapter = MoviesRecyclerAdapter(this)
+        val categoriesAdapter = CategoriesRecyclerAdapter(this)
         categoriesRecyclerView.adapter = categoriesAdapter
         categoriesAdapter.setData(genresList)
+
         moviesRecyclerView.adapter = moviesAdapter
         moviesRecyclerView.itemAnimator = LandingAnimator().apply {
             addDuration = 1000
@@ -148,6 +136,16 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
             startPostponedEnterTransition()
             true
         }
+
+        viewModel.moviesList.observe(viewLifecycleOwner, Observer {
+            if (firstInitAdapter) {
+                moviesAdapter.moviesListAll.clear()
+                moviesAdapter.moviesListAll.addAll(it)
+                firstInitAdapter = false
+            }
+            moviesAdapter.setData(it)
+            pullToRefreshLayout?.isRefreshing = false
+        })
     }
 
     companion object {
@@ -171,7 +169,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.options_menu, menu)
-        val searchView = menu.findItem(R.id.action_search)?.actionView as SearchView?
+        searchView = menu.findItem(R.id.action_search)?.actionView as SearchView?
         searchView?.queryHint = getString(R.string.search_movie)
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -187,8 +185,7 @@ class MoviesFragment : Fragment(), MovieClickListener, CategoriesListener {
     }
 
     override fun onDestroyView() {
-        viewModel.moviesList.removeObserver(moviesObserver)
-        viewModel.loadingDataState.removeObserver(loadingStateObserver)
+        _binding = null
         super.onDestroyView()
     }
 }
